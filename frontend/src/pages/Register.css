@@ -1,0 +1,174 @@
+/* Register.css */
+:root {
+  --primary-bg: #f2ecff;
+  --primary-button: #5a43f5;
+  --button-hover: #4835cc;
+  --card-bg: white;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555555;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--primary-bg);
+  background-image: url("https://wallpapers.com/images/hd/project-management-tools-illustration-20vwwkbworhkpzff.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: Arial, sans-serif;
+  padding: 1rem;
+  position: relative;
+}
+
+.register-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(90, 67, 245, 0.2);
+  z-index: 1;
+}
+
+.register-card {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: clamp(1rem, 5vw, 2rem);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.register-title {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.5rem, 4vw, 1.75rem);
+  font-weight: bold;
+}
+
+h2 {
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.1rem, 3vw, 1rem);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+}
+
+input {
+  width: 100%;
+  padding: clamp(0.5rem, 2vw, 0.75rem);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary-button);
+  box-shadow: 0 0 0 2px rgba(90, 67, 245, 0.1);
+}
+
+.register-button {
+  background-color: var(--primary-button);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: clamp(0.6rem, 2vw, 0.75rem);
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.register-button:hover {
+  background-color: var(--button-hover);
+}
+
+.register-button:active {
+  transform: scale(0.98);
+}
+
+.login-text {
+  margin-top: 1.5rem;
+  color: var(--text-secondary);
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+}
+
+.login-link {
+  color: var(--primary-button);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+/* Media queries for enhanced responsiveness */
+@media screen and (max-width: 480px) {
+  .register-card {
+    padding: 1.5rem 1rem;
+    border-radius: 6px;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .register-button {
+    padding: 0.7rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .register-card {
+    padding: 1rem 0.75rem;
+  }
+
+  input {
+    padding: 0.6rem;
+  }
+
+  .register-button {
+    padding: 0.6rem;
+  }
+
+  /* Stack form fields closer for very small screens */
+  .form-group {
+    margin-bottom: 0.75rem;
+  }
+}
