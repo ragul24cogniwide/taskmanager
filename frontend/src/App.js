@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Tasks />} />
-          {/* <Route path="task" element={<Tasks />} /> */}
+          {/* Route need to be added */}
         </Route>
       </Routes>
     </Router>
