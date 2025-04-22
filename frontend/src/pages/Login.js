@@ -39,7 +39,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1 className="login-title">Task Manager</h1>
+        <h1 className="login-title">FocusTrack</h1>
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">

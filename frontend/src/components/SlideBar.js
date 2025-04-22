@@ -44,7 +44,7 @@ const SlideBar = () => {
         )}
 
         <div className="sidebar-content">
-          <h2>Task Manager</h2>
+          <h2>FocusTrack</h2>
           <button className="Add-button">
             <Plus size={18} /> Add Task
           </button>
