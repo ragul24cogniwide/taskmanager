@@ -13,7 +13,7 @@ const Login = () => {
   useEffect(() => {
     const img = new Image();
     img.src =
-      "https://png.pngtree.com/thumb_back/fh260/background/20220427/pngtree-tiny-business-people-and-manager-at-tasks-and-goals-accomplishment-chart-image_1091427.jpg";
+      "https://wallpapers.com/images/hd/project-management-tools-illustration-20vwwkbworhkpzff.jpg";
   }, []);
 
   const handleChange = (e) => {
