@@ -41,7 +41,7 @@ const Register = () => {
   const handleLoginClick = () => {
     // Add navigation to login page
     console.log("Navigate to login");
-    navigate("/login");
+    navigate("/");
   };
 
   return (

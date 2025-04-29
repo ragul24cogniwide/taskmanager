@@ -10,10 +10,12 @@ import {
   Plus,
 } from "lucide-react";
 import "./SlideBar.css";
+import { useNavigate } from "react-router-dom";
 
 const SlideBar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -49,10 +51,10 @@ const SlideBar = () => {
             <Plus size={18} /> Add Task
           </button>
           <ul>
-            <li>
+            <li onClick={() => navigate("/dashboard")}>
               <Home size={18} /> DashBoard
             </li>
-            <li>
+            <li onClick={() => navigate("/home")}>
               <CheckSquare size={18} /> Tasks
             </li>
             <li>

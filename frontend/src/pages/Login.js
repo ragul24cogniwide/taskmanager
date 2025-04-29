@@ -28,6 +28,7 @@ const Login = () => {
     e.preventDefault();
     // Add your login logic here
     console.log("Login submitted:", formData);
+    navigate("/home");
   };
 
   const handleRegisterClick = () => {
