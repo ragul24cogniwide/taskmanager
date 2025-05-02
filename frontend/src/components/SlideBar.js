@@ -8,13 +8,18 @@ import {
   Calendar,
   BarChart,
   Plus,
+  LogOut,
 } from "lucide-react";
 import "./SlideBar.css";
 import { useNavigate } from "react-router-dom";
 
+import NewTaskModal from "../pages/NewTaskModal";
+
 const SlideBar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [tasks, setTasks] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +34,22 @@ const SlideBar = () => {
   }, []);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
+
+  const handlelogout = () => {
+    localStorage.removeItem("user_token");
+    navigate("/");
+  };
+
+  const handleCreateTask = (task) => {
+    const newTask = {
+      id: Date.now(),
+      ...task,
+      completed: false,
+      createdAt: new Date(),
+    };
+    setTasks([...tasks, newTask]);
+  };
+
 
   return (
     <>
@@ -47,7 +68,7 @@ const SlideBar = () => {
 
         <div className="sidebar-content">
           <h2>FocusTrack</h2>
-          <button className="Add-button">
+          <button onClick={() => setShowModal(true)} className="Add-button">
             <Plus size={18} /> Add Task
           </button>
           <ul>
@@ -66,9 +87,18 @@ const SlideBar = () => {
             <li>
               <Settings size={18} /> Settings
             </li>
+            <li onClick={() => handlelogout()}>
+              <LogOut size={18} /> Logout
+            </li>
           </ul>
         </div>
       </div>
+      {showModal && (
+        <NewTaskModal
+          onClose={() => setShowModal(false)}
+          onCreate={handleCreateTask}
+        />
+      )}
     </>
   );
 };

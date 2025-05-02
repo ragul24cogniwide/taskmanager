@@ -1,39 +1,33 @@
 import React, { useState, useEffect } from "react";
+import notasks from "../assests/no-tasks-removebg-preview.png";
+import NewTaskModal from "./NewTaskModal";
 import "./Tasks.css";
+
+import { Plus } from "lucide-react";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
-  const [newTaskTitle, setNewTaskTitle] = useState("");
   const [isMobile, setIsMobile] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Check if screen is mobile or tablet size
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-
-    // Initial check
     checkScreenSize();
-
-    // Add event listener for window resize
     window.addEventListener("resize", checkScreenSize);
-
-    // Clean up
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  const addTask = () => {
-    if (newTaskTitle.trim()) {
-      const newTask = {
-        id: Date.now(),
-        title: newTaskTitle,
-        completed: false,
-        createdAt: new Date(),
-      };
-
-      setTasks([...tasks, newTask]);
-      setNewTaskTitle("");
-    }
+  const handleCreateTask = (task) => {
+    const newTask = {
+      id: Date.now(),
+      ...task,
+      completed: false,
+      createdAt: new Date(),
+    };
+    setTasks([...tasks, newTask]);
   };
 
   const toggleTaskCompletion = (taskId) => {
@@ -48,6 +42,11 @@ const Tasks = () => {
     setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
+  // Filter tasks by search term
+  const filteredTasks = tasks.filter((task) =>
+    task.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="tasks-container">
       <div className="tasks-header">
@@ -57,26 +56,34 @@ const Tasks = () => {
         </div>
       </div>
 
-      <div className="add-task-form">
+      {/* 🔍 Search Bar + Add Task Button */}
+      <div className="search-bar">
         <input
           type="text"
-          value={newTaskTitle}
-          onChange={(e) => setNewTaskTitle(e.target.value)}
-          placeholder="Enter a new task"
-          className="task-input"
+          placeholder="Search tasks..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
         />
-        <button onClick={addTask} className="add-button">
-          Add Task
+        <button onClick={() => setShowModal(true)} className="add-button">
+          <Plus size={18} />
+          Add New Task
         </button>
       </div>
 
       <div className="tasks-list">
-        {tasks.length === 0 ? (
+        {filteredTasks.length === 0 ? (
           <div className="empty-state">
-            <p>No tasks yet. Add a task to get started!</p>
+            <p>No tasks found. Get Started!?</p>
+            <img
+              style={{ height: 250, width: 250 }}
+              src={notasks}
+              alt="No tasks"
+              className="empty-state-image"
+            />
           </div>
         ) : (
-          tasks.map((task) => (
+          filteredTasks.map((task) => (
             <div
               key={task.id}
               className={`task-item ${task.completed ? "completed" : ""}`}
@@ -91,7 +98,7 @@ const Tasks = () => {
               <div className="task-content">
                 <h3>{task.title}</h3>
                 <p className="task-date">
-                  {task.createdAt.toLocaleDateString()}
+                  {new Date(task.createdAt).toLocaleDateString()}
                 </p>
               </div>
               <button
@@ -104,6 +111,13 @@ const Tasks = () => {
           ))
         )}
       </div>
+
+      {showModal && (
+        <NewTaskModal
+          onClose={() => setShowModal(false)}
+          onCreate={handleCreateTask}
+        />
+      )}
     </div>
   );
 };

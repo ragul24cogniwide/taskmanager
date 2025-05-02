@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
+import background from "../assests/background.jpg";
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
   // Optional: Preload the background image for better UX
   useEffect(() => {
     const img = new Image();
-    img.src =
-      "https://wallpapers.com/images/hd/project-management-tools-illustration-20vwwkbworhkpzff.jpg";
+    img.src = { background };
   }, []);
 
   const handleChange = (e) => {
@@ -24,16 +24,32 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your login logic here
-    console.log("Login submitted:", formData);
-    navigate("/home");
+    try {
+      const response = await fetch("http://localhost:8090/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+
+      const data = await response.text(); // since the token is plain text, not JSON
+      localStorage.setItem("user_token", data); // or sessionStorage if you prefer
+
+      // console.log("Login submitted:", formData);
+      navigate("/home");
+    } catch (error) {
+      console.error("Error during login:", error.message);
+    }
   };
 
   const handleRegisterClick = () => {
-    // Add navigation to register page
-    console.log("Navigate to register");
     navigate("/register");
   };
 
@@ -44,12 +60,12 @@ const Login = () => {
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="username">UserName</label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
+              type="username"
+              id="usrname"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               required
             />

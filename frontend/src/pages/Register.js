@@ -2,20 +2,23 @@ import React, { useState, useEffect } from "react";
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
 
+import background from "../assests/background.jpg";
+
 const Register = () => {
+  // const API_KEY = process.env.REACT_APP_API_KEY;
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    username: "",
+    emailid: "",
+    role: "USER",
     password: "",
-    confirmPassword: "",
+    confirmpassword: "",
   });
 
   // Optional: Preload the background image for better UX
   useEffect(() => {
     const img = new Image();
-    img.src =
-      "https://wallpapers.com/images/hd/project-management-tools-illustration-20vwwkbworhkpzff.jpg";
+    img.src = { background };
   }, []);
 
   const handleChange = (e) => {
@@ -26,21 +29,29 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // // Add validation here
-    // if (formData.password !== formData.confirmPassword) {
-    //   alert("Passwords don't match");
-    //   return;
-    // }
-    // Add your registration logic here
-    console.log("Registration submitted:", formData);
-    navigate("/home");
+    try {
+      const response = await fetch("http://localhost:8090/api/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+
+      // console.log("Registration submitted:", formData);
+      navigate("/");
+    } catch (error) {
+      console.error("Error during registration:", error.message);
+    }
   };
 
   const handleLoginClick = () => {
-    // Add navigation to login page
-    console.log("Navigate to login");
     navigate("/");
   };
 
@@ -54,9 +65,9 @@ const Register = () => {
             <label htmlFor="name">Full Name</label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="username"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               required
             />
@@ -65,9 +76,9 @@ const Register = () => {
             <label htmlFor="email">Email</label>
             <input
               type="email"
-              id="email"
-              name="email"
-              value={formData.email}
+              id="emailid"
+              name="emailid"
+              value={formData.emailid}
               onChange={handleChange}
               required
             />
@@ -88,9 +99,9 @@ const Register = () => {
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
               type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
+              id="confirmpassword"
+              name="confirmpassword"
+              value={formData.confirmpassword}
               onChange={handleChange}
               required
               minLength="6"

@@ -33,10 +33,38 @@
   font-size: 14px;
 }
 
-.add-task-form {
+.search-bar {
   display: flex;
-  margin-bottom: 24px;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0 1.5rem;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 200px;
+  max-width: 600px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.add-button {
+  padding: 8px 16px;
+  background-color: #7c3aed; /* or any theme color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-button:hover {
+  background-color: #5b21b6;
 }
 
 .task-input {
@@ -76,6 +104,7 @@
 }
 
 .empty-state {
+  margin-top: 100px;
   text-align: center;
   padding: 48px 0;
   color: #6b7280;
