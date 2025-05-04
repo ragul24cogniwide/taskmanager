@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import notasks from "../assests/no-tasks-removebg-preview.png";
-import NewTaskModal from "./NewTaskModal";
-import "./Tasks.css";
+import NewTaskModal from "../components/NewTaskModal";
+import "./Tasks.css"; // Assuming you have a CSS file for styling
 
 import { Plus } from "lucide-react";
 
@@ -43,8 +43,9 @@ const Tasks = () => {
   };
 
   // Filter tasks by search term
-  const filteredTasks = tasks.filter((task) =>
-    task.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredTasks = tasks.filter(
+    (task) =>
+      task.title && task.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

@@ -39,8 +39,9 @@ const Login = () => {
         throw new Error("Network response was not ok " + response.statusText);
       }
 
-      const data = await response.text(); // since the token is plain text, not JSON
-      localStorage.setItem("user_token", data); // or sessionStorage if you prefer
+      const data = await response.json(); //since the format coming is json
+      localStorage.setItem("user_token", data.token);
+      localStorage.setItem("user_id", data.id);
 
       // console.log("Login submitted:", formData);
       navigate("/home");

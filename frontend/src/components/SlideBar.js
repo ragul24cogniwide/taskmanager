@@ -13,7 +13,7 @@ import {
 import "./SlideBar.css";
 import { useNavigate } from "react-router-dom";
 
-import NewTaskModal from "../pages/NewTaskModal";
+import NewTaskModal from "./NewTaskModal"; // Import the modal component
 
 const SlideBar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -37,6 +37,7 @@ const SlideBar = () => {
 
   const handlelogout = () => {
     localStorage.removeItem("user_token");
+    localStorage.removeItem("user_id");
     navigate("/");
   };
 
@@ -49,7 +50,6 @@ const SlideBar = () => {
     };
     setTasks([...tasks, newTask]);
   };
-
 
   return (
     <>
