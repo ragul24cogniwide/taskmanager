@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import notasks from "../assests/no-tasks-removebg-preview.png";
 import NewTaskModal from "../components/NewTaskModal";
-import "./Tasks.css"; // Assuming you have a CSS file for styling
-
+import GetTask from "../components/GetTask";
 import { Plus } from "lucide-react";
+import "./Tasks.css";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -57,7 +57,6 @@ const Tasks = () => {
         </div>
       </div>
 
-      {/* 🔍 Search Bar + Add Task Button */}
       <div className="search-bar">
         <input
           type="text"
@@ -72,46 +71,13 @@ const Tasks = () => {
         </button>
       </div>
 
-      <div className="tasks-list">
-        {filteredTasks.length === 0 ? (
-          <div className="empty-state">
-            <p>No tasks found. Get Started!?</p>
-            <img
-              style={{ height: 250, width: 250 }}
-              src={notasks}
-              alt="No tasks"
-              className="empty-state-image"
-            />
-          </div>
-        ) : (
-          filteredTasks.map((task) => (
-            <div
-              key={task.id}
-              className={`task-item ${task.completed ? "completed" : ""}`}
-            >
-              <div className="task-checkbox">
-                <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => toggleTaskCompletion(task.id)}
-                />
-              </div>
-              <div className="task-content">
-                <h3>{task.title}</h3>
-                <p className="task-date">
-                  {new Date(task.createdAt).toLocaleDateString()}
-                </p>
-              </div>
-              <button
-                className="delete-button"
-                onClick={() => deleteTask(task.id)}
-              >
-                Delete
-              </button>
-            </div>
-          ))
-        )}
-      </div>
+      {/* 👉 All tasks shown from GetTask */}
+      <GetTask
+        tasks={filteredTasks}
+        toggleTaskCompletion={toggleTaskCompletion}
+        deleteTask={deleteTask}
+        emptyImage={notasks}
+      />
 
       {showModal && (
         <NewTaskModal

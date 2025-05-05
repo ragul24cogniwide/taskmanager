@@ -1,0 +1,68 @@
+/* GetTask.css */
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.task-item {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.task-item.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.task-checkbox input {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.task-content h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.task-date {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.delete-button {
+  margin-left: auto;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background: #c0392b;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+}
+
+.empty-state-image {
+  margin-top: 1rem;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-weight: bold;
+  padding: 1rem;
+}
