@@ -78,7 +78,7 @@ const SlideBar = () => {
             <li onClick={() => navigate("/home")}>
               <CheckSquare size={18} /> Tasks
             </li>
-            <li>
+            <li onClick={() => navigate("/calendar")}>
               <Calendar size={18} /> Calendar
             </li>
             <li>

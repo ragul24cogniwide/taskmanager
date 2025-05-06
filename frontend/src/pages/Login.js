@@ -24,10 +24,12 @@ const Login = () => {
     });
   };
 
+  const API_KEY = process.env.REACT_APP_API_KEY;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8090/api/users/login", {
+      const response = await fetch(`${API_KEY}/api/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

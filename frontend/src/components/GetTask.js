@@ -20,7 +20,9 @@ const GetTask = ({
         />
       </div>
     );
+  
   }
+
 
   return (
     <div className="tasks-list">
@@ -34,6 +36,7 @@ const GetTask = ({
               type="checkbox"
               checked={task.completed}
               onChange={() => toggleTaskCompletion(task.id)}
+              onClick={() => deleteTask(task.id)}
             />
           </div>
           <div className="task-content">

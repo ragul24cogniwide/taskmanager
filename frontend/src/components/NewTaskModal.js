@@ -22,6 +22,8 @@ const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
     setTaskData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const API_KEY = process.env.REACT_APP_API_KEY;
+
   const handleSubmit = async () => {
     if (taskData.title.trim()) {
       console.log("Submitting task data:", taskData);
@@ -32,18 +34,15 @@ const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
           return;
         }
 
-        const response = await fetch(
-          `http://localhost:8090/api/tasks/createtasks`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(taskData),
-            credentials: "include", // This helps with CORS for cookies
-          }
-        );
+        const response = await fetch(`${API_KEY}/api/tasks/createtasks`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(taskData),
+          credentials: "include", // This helps with CORS for cookies
+        });
 
         console.log("Response status:", response.status);
 
@@ -73,7 +72,7 @@ const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
         if (!token) return;
 
         const response = await fetch(
-          `http://localhost:8090/api/tasks/updatetask/${taskData.id}`,
+          `${API_KEY}/api/tasks/updatetask/${taskData.id}`,
           {
             method: "PUT",
             headers: {

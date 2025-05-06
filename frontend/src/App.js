@@ -7,6 +7,7 @@ import Tasks from "./pages/Tasks";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashoard";
+import CalendarView from "./components/CalendarView";
 
 function App() {
   return (
@@ -23,6 +24,13 @@ function App() {
         {/* Separate route for dashboard with Layout wrapper */}
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<Dashboard />} />
+        </Route>
+
+        <Route path="*" element={<h1>404 Not Found</h1>} />
+        {/* Catch-all route for any undefined paths */}
+
+        <Route path="/calendar" element={<Layout />}>
+          <Route index element={<CalendarView />} />
         </Route>
       </Routes>
     </Router>

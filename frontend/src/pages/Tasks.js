@@ -23,12 +23,14 @@ const Tasks = () => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  const API_KEY = process.env.REACT_APP_API_KEY;
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const user_id = localStorage.getItem("user_id");
         const response = await fetch(
-          `http://localhost:8090/api/tasks/getalltasksbyid/${user_id}`,
+          `${API_KEY}/api/tasks/getalltasksbyid/${user_id}`,
           {
             method: "GET",
             headers: {
@@ -78,7 +80,7 @@ const Tasks = () => {
   const deleteTask = async (taskId) => {
     try {
       const response = await fetch(
-        `http://localhost:8090/api/tasks/deletetask/${taskId}`,
+        `${API_KEY}/api/tasks/deletetask/${taskId}`,
         {
           method: "DELETE",
           headers: {
