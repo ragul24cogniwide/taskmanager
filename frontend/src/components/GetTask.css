@@ -51,6 +51,21 @@
   background: #c0392b;
 }
 
+.update-button {
+  margin-right: auto;
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-button:hover {
+  background: green;
+}
+
 .empty-state {
   text-align: center;
   padding: 2rem;
@@ -66,3 +81,19 @@
   font-weight: bold;
   padding: 1rem;
 }
+
+.task-status.completed {
+  color: green;
+  font-weight: bold;
+}
+
+.task-status.in-progress {
+  color: orange;
+  font-weight: bold;
+}
+
+.task-status.pending {
+  color: red;
+  font-weight: bold;
+}
+

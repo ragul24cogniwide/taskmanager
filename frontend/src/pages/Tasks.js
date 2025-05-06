@@ -10,6 +10,9 @@ const Tasks = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const token = localStorage.getItem("user_token");
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -20,14 +23,48 @@ const Tasks = () => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  const handleCreateTask = (task) => {
-    const newTask = {
-      id: Date.now(),
-      ...task,
-      completed: false,
-      createdAt: new Date(),
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const user_id = localStorage.getItem("user_id");
+        const response = await fetch(
+          `http://localhost:8090/api/tasks/getalltasksbyid/${user_id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            credentials: "include",
+          }
+        );
+        if (!response.ok) throw new Error("Failed to fetch tasks");
+        const data = await response.json();
+        setTasks(data);
+      } catch (err) {
+        console.error("Error fetching tasks:", err);
+      }
     };
-    setTasks([...tasks, newTask]);
+
+    fetchTasks();
+  }, []);
+
+  const handleCreateTask = (newTask) => {
+    setTasks((prev) => [...prev, newTask]);
+  };
+
+  const updateTask = (taskId) => {
+    const taskToEdit = tasks.find((task) => task.id === taskId);
+    if (taskToEdit) {
+      setSelectedTask(taskToEdit);
+      setShowModal(true);
+    }
+  };
+
+  const handleUpdateTask = (updatedTask) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
+    );
   };
 
   const toggleTaskCompletion = (taskId) => {
@@ -38,11 +75,29 @@ const Tasks = () => {
     );
   };
 
-  const deleteTask = (taskId) => {
-    setTasks(tasks.filter((task) => task.id !== taskId));
+  const deleteTask = async (taskId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8090/api/tasks/deletetask/${taskId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        console.error("Failed to delete task:", response.statusText);
+        return;
+      }
+      setTasks(tasks.filter((task) => task.id !== taskId));
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
   };
 
-  // Filter tasks by search term
   const filteredTasks = tasks.filter(
     (task) =>
       task.title && task.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -71,18 +126,23 @@ const Tasks = () => {
         </button>
       </div>
 
-      {/* 👉 All tasks shown from GetTask */}
       <GetTask
         tasks={filteredTasks}
         toggleTaskCompletion={toggleTaskCompletion}
         deleteTask={deleteTask}
         emptyImage={notasks}
+        updateTask={updateTask}
       />
 
       {showModal && (
         <NewTaskModal
-          onClose={() => setShowModal(false)}
+          onClose={() => {
+            setShowModal(false);
+            setSelectedTask(null);
+          }}
           onCreate={handleCreateTask}
+          selectedTask={selectedTask}
+          onUpdate={handleUpdateTask}
         />
       )}
     </div>

@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./NewTaskModal.css";
 
-const NewTaskModal = ({ onClose, onCreate }) => {
+const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
   const [taskData, setTaskData] = useState({
     title: "",
     description: "",
     category: "Personal",
     priority: "Medium",
     status: "Pending",
-    duedate: "",
+    dueDate: "",
   });
 
-  // const userId = localStorage.getItem("user_id");
-  // const token = localStorage.getItem("user_token");
+  useEffect(() => {
+    if (selectedTask) {
+      setTaskData(selectedTask);
+    }
+  }, [selectedTask]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,17 +66,48 @@ const NewTaskModal = ({ onClose, onCreate }) => {
     }
   };
 
+  const handleUpdate = async () => {
+    if (taskData.title.trim()) {
+      try {
+        const token = localStorage.getItem("user_token");
+        if (!token) return;
+
+        const response = await fetch(
+          `http://localhost:8090/api/tasks/updatetask/${taskData.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(taskData),
+            credentials: "include",
+          }
+        );
+
+        if (response.ok) {
+          const result = await response.text();
+          onUpdate(result);
+          onClose();
+        }
+      } catch (error) {
+        console.error("Error updating task:", error);
+      }
+    }
+  };
+
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <h2>Create New Task</h2>
+        <h2>{selectedTask ? "Update Task" : "Create New Task"}</h2>
 
         <div className="form-group">
           <label>Title</label>
           <input
             name="title"
-            placeholder="Task title"
+            value={taskData.title}
             onChange={handleChange}
+            placeholder="Task title"
           />
         </div>
 
@@ -81,15 +115,20 @@ const NewTaskModal = ({ onClose, onCreate }) => {
           <label>Description</label>
           <textarea
             name="description"
-            placeholder="Task description"
+            value={taskData.description}
             onChange={handleChange}
+            placeholder="Task description"
           />
         </div>
 
         <div className="row">
           <div className="form-group">
             <label>Category</label>
-            <select name="category" onChange={handleChange}>
+            <select
+              name="category"
+              value={taskData.category}
+              onChange={handleChange}
+            >
               <option>Personal</option>
               <option>Work</option>
               <option>Finance</option>
@@ -98,7 +137,11 @@ const NewTaskModal = ({ onClose, onCreate }) => {
           </div>
           <div className="form-group">
             <label>Priority</label>
-            <select name="priority" onChange={handleChange}>
+            <select
+              name="priority"
+              value={taskData.priority}
+              onChange={handleChange}
+            >
               <option>Low</option>
               <option>Medium</option>
               <option>High</option>
@@ -109,7 +152,11 @@ const NewTaskModal = ({ onClose, onCreate }) => {
         <div className="row">
           <div className="form-group">
             <label>Status</label>
-            <select name="status" onChange={handleChange}>
+            <select
+              name="status"
+              value={taskData.status}
+              onChange={handleChange}
+            >
               <option>Pending</option>
               <option>In Progress</option>
               <option>Completed</option>
@@ -117,13 +164,22 @@ const NewTaskModal = ({ onClose, onCreate }) => {
           </div>
           <div className="form-group">
             <label>Due Date</label>
-            <input type="date" name="dueDate" onChange={handleChange} />
+            <input
+              type="date"
+              name="dueDate"
+              value={taskData.dueDate}
+              onChange={handleChange}
+            />
           </div>
         </div>
 
         <div className="modal-actions">
           <button onClick={onClose}>Cancel</button>
-          <button onClick={handleSubmit}>Create Task</button>
+          {selectedTask ? (
+            <button onClick={handleUpdate}>Update Task</button>
+          ) : (
+            <button onClick={handleSubmit}>Create Task</button>
+          )}
         </div>
       </div>
     </div>
