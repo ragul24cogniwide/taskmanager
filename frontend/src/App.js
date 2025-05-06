@@ -7,7 +7,7 @@ import Tasks from "./pages/Tasks";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashoard";
-import CalendarView from "./components/CalendarView";
+import CalendarView from "./pages/CalendarView";
 
 function App() {
   return (

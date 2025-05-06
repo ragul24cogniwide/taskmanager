@@ -9,6 +9,7 @@ import {
   BarChart,
   Plus,
   LogOut,
+  User,
 } from "lucide-react";
 import "./SlideBar.css";
 import { useNavigate } from "react-router-dom";
@@ -84,9 +85,12 @@ const SlideBar = () => {
             <li>
               <BarChart size={18} /> Reports
             </li>
-            <li>
-              <Settings size={18} /> Settings
-            </li>
+            {localStorage.getItem("user_id") === "1" && (
+              <li>
+                <User size={18} /> Users<span>(Admin Acess)</span>
+              </li>
+            )}
+
             <li onClick={() => handlelogout()}>
               <LogOut size={18} /> Logout
             </li>

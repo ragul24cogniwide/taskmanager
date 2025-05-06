@@ -13,6 +13,7 @@ const Tasks = () => {
   const [selectedTask, setSelectedTask] = useState(null);
 
   const token = localStorage.getItem("user_token");
+  const API_KEY = process.env.REACT_APP_API_KEY;
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -22,8 +23,6 @@ const Tasks = () => {
     window.addEventListener("resize", checkScreenSize);
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
-
-  const API_KEY = process.env.REACT_APP_API_KEY;
 
   useEffect(() => {
     const fetchTasks = async () => {
