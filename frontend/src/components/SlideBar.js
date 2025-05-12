@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   Menu,
   X,
-  Settings,
   Home,
   CheckSquare,
   Calendar,
@@ -68,7 +67,7 @@ const SlideBar = () => {
         )}
 
         <div className="sidebar-content">
-          <h2>FocusTrack</h2>
+          <h2>Focus-Track</h2>
           <button onClick={() => setShowModal(true)} className="Add-button">
             <Plus size={18} /> Add Task
           </button>
@@ -86,8 +85,9 @@ const SlideBar = () => {
               <BarChart size={18} /> Reports
             </li>
             {localStorage.getItem("user_id") === "1" && (
-              <li>
-                <User size={18} /> Users<span>(Admin Acess)</span>
+              <li onClick={() => navigate("/usersByAdmin")}>
+                <User size={18} /> Users
+                <span>(Admin Acess)</span>
               </li>
             )}
 

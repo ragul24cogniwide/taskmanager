@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <h1>Dashboard</h1>
-      <p>Welcome to your dashboard!</p>
+      <p>Welcome to your Focus-track!</p>
     </div>
   );
 };

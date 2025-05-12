@@ -9,6 +9,7 @@ const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
     priority: "Medium",
     status: "Pending",
     dueDate: "",
+    assignedBy: "USER",
   });
 
   useEffect(() => {
@@ -117,6 +118,17 @@ const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
             value={taskData.description}
             onChange={handleChange}
             placeholder="Task description"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>AssignedBy</label>
+          <input
+            type="text"
+            name="assignedby"
+            value={taskData.assignedBy}
+            onChange={handleChange}
+            placeholder="Task AssignedBy"
           />
         </div>
 

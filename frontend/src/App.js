@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashoard";
 import CalendarView from "./pages/CalendarView";
+import GetAllUsers from "./components/GetAllUsers";
 
 function App() {
   return (
@@ -26,12 +27,16 @@ function App() {
           <Route index element={<Dashboard />} />
         </Route>
 
-        <Route path="*" element={<h1>404 Not Found</h1>} />
-        {/* Catch-all route for any undefined paths */}
-
         <Route path="/calendar" element={<Layout />}>
           <Route index element={<CalendarView />} />
         </Route>
+
+        <Route path="/usersByAdmin" element={<Layout />}>
+          <Route index element={<GetAllUsers />} />
+        </Route>
+
+        <Route path="*" element={<h1>404 Not Found</h1>} />
+        {/* Catch-all route for any undefined paths */}
       </Routes>
     </Router>
   );
