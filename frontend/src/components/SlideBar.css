@@ -9,6 +9,7 @@
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   z-index: 1000;
+  font-family: 'Poppins', sans-serif;
 }
 
 .sidebar.open {
@@ -121,4 +122,9 @@
 .Add-button {
   width: 100%;
   justify-content: center;
+}
+
+.size-span{
+  font-size: 14px;
+  color: #6b7280; /* Gray-500 */
 }

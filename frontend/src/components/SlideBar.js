@@ -86,8 +86,9 @@ const SlideBar = () => {
             </li>
             {localStorage.getItem("user_id") === "1" && (
               <li onClick={() => navigate("/usersByAdmin")}>
-                <User size={18} /> Users
-                <span>(Admin Acess)</span>
+                <User size={18} />
+                Users
+                <span className="size-span">(Admin Acess)</span>
               </li>
             )}
 

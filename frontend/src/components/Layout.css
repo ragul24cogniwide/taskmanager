@@ -1,5 +1,6 @@
 .app-layout {
   display: flex;
+  font-family: 'Poppins', sans-serif;
 }
 
 .page-content {
