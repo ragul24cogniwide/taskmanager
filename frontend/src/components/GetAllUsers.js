@@ -46,8 +46,8 @@ const GetAllUsers = () => {
   );
 
   return (
-    <div className="main">
-      <h2>All Users</h2>
+    <div className="main-content">
+      <h2 className="text">All Users</h2>
       <input
         type="text"
         placeholder="Search by username or email..."
@@ -59,24 +59,48 @@ const GetAllUsers = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Username</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredUsers.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.username}</td>
-                <td>{user.emailid}</td>
+        <div className="table-wrapper">
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Assign Task</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredUsers.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>{user.username}</td>
+                  <td>{user.emailid}</td>
+                  <td>
+                    <button
+                      className="assign-task-button"
+                      onClick={() => {
+                        console.log(`Assigning task to ${user.username}`);
+                      }}
+                    >
+                      Assign Task
+                    </button>
+
+
+                    {/* //this button is for view details */}
+                    <button
+                      className="assign-task-button-details"
+                      onClick={() => {
+                        console.log(`Assigning task to ${user.username}`);
+                      }}
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

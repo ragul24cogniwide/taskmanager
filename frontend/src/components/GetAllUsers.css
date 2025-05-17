@@ -1,29 +1,78 @@
+.main-content {
+  margin-left: 260px;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-
-.user-table {
-    width: 80%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .user-table th,
-  .user-table td {
-    border: 1px solid #ccc;
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
     padding: 10px;
+    margin-top: 50px;
+  }
+
+  .text{
+    font-size: 20px;
     text-align: center;
   }
-  
-  .user-table th {
-    background-color: #f2f2f2;
-  }
+}
 
-  .search-input {
-    padding: 10px;
-    width: 50%;
-    max-width: 400px;
-    margin: 15px 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-  }
-  
+.search-input {
+  padding: 10px;
+  width: 100%;
+  max-width: 50%;
+  margin: 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* Ensures horizontal scroll on small screens */
+}
+
+.user-table th,
+.user-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.user-table th {
+  background-color: #f2f2f2;
+}
+
+.assign-task-button {
+  padding: 10px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.assign-task-button:hover {
+  background-color: #0056b3;
+}
+
+.assign-task-button-details {
+  padding: 10px 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+.assign-task-button-details:hover {
+  background-color: #86b300;
+}
