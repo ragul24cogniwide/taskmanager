@@ -48,7 +48,7 @@ const Tasks = () => {
     };
 
     fetchTasks();
-  }, []);
+  }, []); 
 
   const handleCreateTask = (newTask) => {
     setTasks((prev) => [...prev, newTask]);

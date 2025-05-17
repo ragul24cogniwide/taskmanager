@@ -48,6 +48,9 @@ const GetAllUsers = () => {
   return (
     <div className="main-content">
       <h2 className="text">All Users</h2>
+      <p className="users-caption">
+        Below is the list of users with options to assign tasks or view details by Admin.
+      </p>
       <input
         type="text"
         placeholder="Search by username or email..."
@@ -84,7 +87,6 @@ const GetAllUsers = () => {
                     >
                       Assign Task
                     </button>
-
 
                     {/* //this button is for view details */}
                     <button

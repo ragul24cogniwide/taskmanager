@@ -6,9 +6,10 @@ import Layout from "./components/Layout";
 import Tasks from "./pages/Tasks";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashoard";
+
 import CalendarView from "./pages/CalendarView";
 import GetAllUsers from "./components/GetAllUsers";
+import Dashboard from "./pages/Dashboard/Dashoard";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
 
         {/* Separate route for dashboard with Layout wrapper */}
         <Route path="/dashboard" element={<Layout />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<Dashboard/>} />
         </Route>
 
         <Route path="/calendar" element={<Layout />}>

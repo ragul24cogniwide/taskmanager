@@ -1,0 +1,56 @@
+.dashboard-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  margin-left:260px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    margin-left: 0;
+    padding: 10px;
+    margin-top: 60px;
+  }
+}
+
+.dashboard-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.text {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.dashboard-caption {
+  margin-top: -10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #555;
+  text-align: center;
+}
+
+
+.pie-container, .reminders {
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f8f9ff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.reminders .reminder {
+  background-color: #fff3cd;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 8px;
+  border-left: 4px solid #ffc107;
+}
+
+.recent-tasks {
+  margin-top: 30px;
+}
