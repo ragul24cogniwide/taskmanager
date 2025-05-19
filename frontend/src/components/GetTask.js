@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "./GetTask.css";
+import ViewTasks from "./ViewTasks";
+
 
 const GetTask = ({
   tasks,
@@ -8,6 +10,10 @@ const GetTask = ({
   emptyImage,
   updateTask,
 }) => {
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const closeModal = () => setSelectedTask(null);
+
   if (!tasks || tasks.length === 0) {
     return (
       <div className="empty-state">
@@ -34,7 +40,6 @@ const GetTask = ({
               type="checkbox"
               checked={task.completed}
               onChange={() => toggleTaskCompletion(task.id)}
-              onClick={() => deleteTask(task.id)}
             />
           </div>
           <div className="task-content">
@@ -51,12 +56,10 @@ const GetTask = ({
             <p className="task-category">Category: {task.category}</p>
             <p className="task-due-date">Due Date: {task.dueDate}</p>
           </div>
-          {/* //view button to view all the details of the task */}
-          <button className="view-button" onClick={() => alert("View Task")}>
+
+          <button className="view-button" onClick={() => setSelectedTask(task)}>
             View
           </button>
-          {/* edit button to edit the task */}
-          {/* update button and delete button */}
           <button className="update-button" onClick={() => updateTask(task.id)}>
             Update
           </button>
@@ -65,6 +68,9 @@ const GetTask = ({
           </button>
         </div>
       ))}
+
+      {/* Pass task and onClose to the modal */}
+      <ViewTasks task={selectedTask} onClose={closeModal} />
     </div>
   );
 };
