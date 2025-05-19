@@ -118,7 +118,7 @@ const GetAllUsers = () => {
         <NewTaskModal
           onCreate={handleCreateTask}
           onClose={() => setShowModal(false)}
-          assignedUser={selectedUser} // ✅ pass user
+          assignedUser={selectedUser} // includes user.id
         />
       )}
     </div>

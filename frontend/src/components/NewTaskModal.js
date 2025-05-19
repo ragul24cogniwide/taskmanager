@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./NewTaskModal.css";
 import Tasks from "../pages/Tasks";
 
-const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
+const NewTaskModal = ({
+  onClose,
+  onCreate,
+  onUpdate,
+  selectedTask,
+  assignedUser,
+}) => {
   const [taskData, setTaskData] = useState({
     title: "",
     description: "",
@@ -23,9 +29,11 @@ const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
       setTaskData((prev) => ({
         ...prev,
         assignedBy: isAdmin ? "ADMIN" : "USER",
+        user_id: assignedUser?.id, // ✅ set user_id for new task
       }));
     }
-  }, [selectedTask]);
+    console.log("Assigned User ID:", assignedUser?.id);
+  }, [selectedTask, assignedUser]);
 
   useEffect(() => {
     if (selectedTask) {
