@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./NewTaskModal.css";
+import Tasks from "../pages/Tasks";
 
 const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
   const [taskData, setTaskData] = useState({
@@ -11,6 +12,20 @@ const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
     dueDate: "",
     assignedBy: "USER",
   });
+
+  useEffect(() => {
+    const loggedInUserId = localStorage.getItem("user_id");
+    const isAdmin = loggedInUserId === "1";
+
+    if (selectedTask) {
+      setTaskData(selectedTask);
+    } else {
+      setTaskData((prev) => ({
+        ...prev,
+        assignedBy: isAdmin ? "ADMIN" : "USER",
+      }));
+    }
+  }, [selectedTask]);
 
   useEffect(() => {
     if (selectedTask) {
@@ -57,6 +72,7 @@ const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
           console.error("Failed to create task:", response.status, errorText);
           // Optionally show an error to the user
         }
+        // <Tasks />
       } catch (error) {
         console.error("Error creating task:", error);
       }
@@ -122,13 +138,12 @@ const NewTaskModal = ({ onClose, onCreate, onUpdate, selectedTask }) => {
         </div>
 
         <div className="form-group">
-          <label>AssignedBy</label>
+          <label>Assigned By</label>
           <input
             type="text"
-            name="assignedby"
+            name="assignedBy"
             value={taskData.assignedBy}
-            onChange={handleChange}
-            placeholder="Task AssignedBy"
+            readOnly // make it read-only
           />
         </div>
 

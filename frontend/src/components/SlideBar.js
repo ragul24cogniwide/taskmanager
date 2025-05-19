@@ -9,6 +9,7 @@ import {
   Plus,
   LogOut,
   User,
+  Bell,
 } from "lucide-react";
 import "./SlideBar.css";
 import { useNavigate } from "react-router-dom";
@@ -77,6 +78,10 @@ const SlideBar = () => {
             </li>
             <li onClick={() => navigate("/home")}>
               <CheckSquare size={18} /> Tasks
+            </li>
+            <li onClick={() => navigate("/notification")}>
+              <Bell size={18} />
+              Notification
             </li>
             <li onClick={() => navigate("/calendar")}>
               <Calendar size={18} /> Calendar

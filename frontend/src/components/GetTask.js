@@ -20,9 +20,7 @@ const GetTask = ({
         />
       </div>
     );
-  
   }
-
 
   return (
     <div className="tasks-list">
@@ -53,6 +51,12 @@ const GetTask = ({
             <p className="task-category">Category: {task.category}</p>
             <p className="task-due-date">Due Date: {task.dueDate}</p>
           </div>
+          {/* //view button to view all the details of the task */}
+          <button className="view-button" onClick={() => alert("View Task")}>
+            View
+          </button>
+          {/* edit button to edit the task */}
+          {/* update button and delete button */}
           <button className="update-button" onClick={() => updateTask(task.id)}>
             Update
           </button>

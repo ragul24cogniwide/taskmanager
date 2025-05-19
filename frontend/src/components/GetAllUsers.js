@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./GetAllUsers.css";
+import NewTaskModal from "./NewTaskModal";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -7,6 +8,9 @@ const GetAllUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null); // ✅ store selected user
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -20,8 +24,6 @@ const GetAllUsers = () => {
           },
           credentials: "include",
         });
-
-        console.log(response);
 
         if (!response.ok) {
           throw new Error("Failed to fetch users");
@@ -45,11 +47,21 @@ const GetAllUsers = () => {
       user.email?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleCreateTask = (newTask) => {
+    setTasks((prev) => [...prev, newTask]);
+  };
+
+  const openTaskModal = (user) => {
+    setSelectedUser(user);
+    setShowModal(true);
+  };
+
   return (
     <div className="main-content">
       <h2 className="text">All Users</h2>
       <p className="users-caption">
-        Below is the list of users with options to assign tasks or view details by Admin.
+        Below is the list of users with options to assign tasks or view details
+        by Admin.
       </p>
       <input
         type="text"
@@ -69,7 +81,7 @@ const GetAllUsers = () => {
                 <th>ID</th>
                 <th>Username</th>
                 <th>Email</th>
-                <th>Assign Task</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -81,19 +93,15 @@ const GetAllUsers = () => {
                   <td>
                     <button
                       className="assign-task-button"
-                      onClick={() => {
-                        console.log(`Assigning task to ${user.username}`);
-                      }}
+                      onClick={() => openTaskModal(user)} // ✅ open modal
                     >
                       Assign Task
                     </button>
-
-                    {/* //this button is for view details */}
                     <button
                       className="assign-task-button-details"
-                      onClick={() => {
-                        console.log(`Assigning task to ${user.username}`);
-                      }}
+                      onClick={() =>
+                        console.log(`Viewing details for ${user.username}`)
+                      }
                     >
                       View Details
                     </button>
@@ -103,6 +111,15 @@ const GetAllUsers = () => {
             </tbody>
           </table>
         </div>
+      )}
+
+      {/* ✅ Show modal if triggered */}
+      {showModal && selectedUser && (
+        <NewTaskModal
+          onCreate={handleCreateTask}
+          onClose={() => setShowModal(false)}
+          assignedUser={selectedUser} // ✅ pass user
+        />
       )}
     </div>
   );

@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import CalendarView from "./pages/CalendarView";
 import GetAllUsers from "./components/GetAllUsers";
 import Dashboard from "./pages/Dashboard/Dashoard";
+import Notifications from "./pages/Notifications";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
 
         {/* Separate route for dashboard with Layout wrapper */}
         <Route path="/dashboard" element={<Layout />}>
-          <Route index element={<Dashboard/>} />
+          <Route index element={<Dashboard />} />
         </Route>
 
         <Route path="/calendar" element={<Layout />}>
@@ -34,6 +35,9 @@ function App() {
 
         <Route path="/usersByAdmin" element={<Layout />}>
           <Route index element={<GetAllUsers />} />
+        </Route>
+        <Route path="/notification" element={<Layout />}>
+          <Route index element={<Notifications />} />
         </Route>
 
         <Route path="*" element={<h1>404 Not Found</h1>} />

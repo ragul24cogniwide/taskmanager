@@ -37,6 +37,19 @@
   color: #888;
 }
 
+.view-button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.view-button:hover {
+  background: #2980b9;
+}
+
 .delete-button {
   margin-left: auto;
   background: #e74c3c;
