@@ -4,6 +4,8 @@ import {
   X,
   Home,
   CheckSquare,
+  CheckCheckIcon,
+  User2Icon,
   Calendar,
   BarChart,
   Plus,
@@ -76,19 +78,33 @@ const SlideBar = () => {
             <li onClick={() => navigate("/dashboard")}>
               <Home size={18} /> DashBoard
             </li>
+
             <li onClick={() => navigate("/home")}>
               <CheckSquare size={18} /> Tasks
             </li>
+
+            {localStorage.getItem("user_id") != "1" && (
+              <li onClick={() => navigate("/AdminTasks")}>
+                <CheckCheckIcon size={18} />
+                Tasks Ass
+                <span className="size-span">(Admin)</span>
+              </li>
+            )}
+
             <li onClick={() => navigate("/notification")}>
               <Bell size={18} />
               Notification
             </li>
-            <li onClick={() => navigate("/calendar")}>
+
+
+
+            {/* <li onClick={() => navigate("/calendar")}>
               <Calendar size={18} /> Calendar
             </li>
             <li>
               <BarChart size={18} /> Reports
-            </li>
+            </li> */}
+
             {localStorage.getItem("user_id") === "1" && (
               <li onClick={() => navigate("/usersByAdmin")}>
                 <User size={18} />
@@ -96,6 +112,8 @@ const SlideBar = () => {
                 <span className="size-span">(Admin Acess)</span>
               </li>
             )}
+
+            <li onClick={()=>navigate("/profile")}><User2Icon size={18}/> Profile</li>
 
             <li onClick={() => handlelogout()}>
               <LogOut size={18} /> Logout

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./GetTask.css";
 import ViewTasks from "./ViewTasks";
 
-
 const GetTask = ({
   tasks,
   toggleTaskCompletion,
@@ -43,9 +42,9 @@ const GetTask = ({
             />
           </div>
           <div className="task-content">
-            <h3>{task.title}</h3>
+            <h3 style={{ fontSize: 18 }}>{task.title}</h3>
             <p className="task-description">{task.description}</p>
-            <p className="task-priority">Priority: {task.priority}</p>
+            {/* <p className="task-priority">Priority: {task.priority}</p> */}
             <p
               className={`task-status ${task.status
                 .toLowerCase()
@@ -53,7 +52,7 @@ const GetTask = ({
             >
               Status: {task.status}
             </p>
-            <p className="task-category">Category: {task.category}</p>
+            {/* <p className="task-category">Category: {task.category}</p> */}
             <p className="task-due-date">Due Date: {task.dueDate}</p>
           </div>
 

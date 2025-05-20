@@ -136,6 +136,21 @@ const Tasks = () => {
         </div>
       </div>
 
+      {/* Search and Add */}
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search tasks..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+        <button onClick={() => setShowModal(true)} className="add-button">
+          <Plus size={18} />
+          Add New Task
+        </button>
+      </div>
+
       {/* Filter Section */}
       <div className="filter-toggle">
         <button
@@ -144,12 +159,7 @@ const Tasks = () => {
         >
           All Tasks
         </button>
-        <button
-          className={filterMode === "admin" ? "active-filter" : ""}
-          onClick={() => setFilterMode("admin")}
-        >
-          My Tasks (Admin)
-        </button>
+
         <button
           className={filterMode === "pending" ? "active-filter" : ""}
           onClick={() => setFilterMode("pending")}
@@ -167,21 +177,6 @@ const Tasks = () => {
           onClick={() => setFilterMode("completed")}
         >
           Completed
-        </button>
-      </div>
-
-      {/* Search and Add */}
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search tasks..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
-        />
-        <button onClick={() => setShowModal(true)} className="add-button">
-          <Plus size={18} />
-          Add New Task
         </button>
       </div>
 

@@ -59,7 +59,7 @@ const Login = () => {
       localStorage.setItem("user_id", data.id);
 
       setTimeout(() => {
-        navigate("/home");
+        navigate("/dashboard");
       }, 1000);
     } catch (error) {
       console.error("Login error:", error.message);
