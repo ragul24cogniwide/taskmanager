@@ -219,3 +219,62 @@
     padding-top: 90px; /* More space for the menu icon */
   }
 }
+
+.filter-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.filter-toggle button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.filter-toggle button:hover {
+  background-color: #f0f0f0;
+}
+
+.filter-toggle .active-filter {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #218838;
+}
+
+

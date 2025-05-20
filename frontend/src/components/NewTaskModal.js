@@ -16,7 +16,7 @@ const NewTaskModal = ({
     status: "Pending",
     dueDate: "",
     assignedBy: "USER",
-    user_id: "",
+    userid: "",
   });
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const NewTaskModal = ({
       setTaskData((prev) => ({
         ...prev,
         assignedBy: isAdmin ? "ADMIN" : "USER",
-        user_id: assignedUser.id,
+        userid: assignedUser.id,
       }));
     }
   }, [selectedTask, assignedUser]);
@@ -55,8 +55,8 @@ const NewTaskModal = ({
     if (taskData.title.trim()) {
       const loggedInUserId = localStorage.getItem("user_id");
 
-      if (!taskData.user_id && assignedUser?.id) {
-        taskData.user_id = assignedUser.id;
+      if (!taskData.userid && assignedUser?.id) {
+        taskData.userid = assignedUser.id;
       }
 
       console.log("Submitting task data:", taskData); // Confirm it includes user_id
@@ -68,7 +68,7 @@ const NewTaskModal = ({
           return;
         }
 
-        const response = await fetch(`${API_KEY}/api/tasks/createtaskbyAdmin`, {
+        const response = await fetch(`${API_KEY}/api/tasks/createtasks`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -94,7 +94,6 @@ const NewTaskModal = ({
       console.error("Task title cannot be empty");
     }
   };
-  
 
   const handleUpdate = async () => {
     if (taskData.title.trim()) {
@@ -214,12 +213,7 @@ const NewTaskModal = ({
 
           <div className="form-group">
             <label>User By ID</label>
-            <input
-              type="text"
-              name="user_id"
-              value={taskData.user_id}
-              readOnly
-            />
+            <input type="text" name="userid" value={taskData.userid} readOnly />
           </div>
         </div>
 

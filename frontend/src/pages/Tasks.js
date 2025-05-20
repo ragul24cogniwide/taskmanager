@@ -11,10 +11,14 @@ const Tasks = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTask, setSelectedTask] = useState(null);
+  const [filterMode, setFilterMode] = useState("all"); // all, admin
+  const [statusFilter, setStatusFilter] = useState("all"); // all, pending, inprogress, completed
 
   const token = localStorage.getItem("user_token");
+  const user_id = localStorage.getItem("user_id");
   const API_KEY = process.env.REACT_APP_API_KEY;
 
+  // Track screen size for responsiveness
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -24,10 +28,10 @@ const Tasks = () => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  // Fetch tasks from API
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const user_id = localStorage.getItem("user_id");
         const response = await fetch(
           `${API_KEY}/api/tasks/getalltasksbyid/${user_id}`,
           {
@@ -48,12 +52,14 @@ const Tasks = () => {
     };
 
     fetchTasks();
-  }, []); 
+  }, [API_KEY, token, user_id]);
 
+  // Create task
   const handleCreateTask = (newTask) => {
     setTasks((prev) => [...prev, newTask]);
   };
 
+  // Prepare to edit task
   const updateTask = (taskId) => {
     const taskToEdit = tasks.find((task) => task.id === taskId);
     if (taskToEdit) {
@@ -62,12 +68,14 @@ const Tasks = () => {
     }
   };
 
+  // Update task after edit
   const handleUpdateTask = (updatedTask) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     );
   };
 
+  // Toggle complete/incomplete
   const toggleTaskCompletion = (taskId) => {
     setTasks(
       tasks.map((task) =>
@@ -76,6 +84,7 @@ const Tasks = () => {
     );
   };
 
+  // Delete task
   const deleteTask = async (taskId) => {
     try {
       const response = await fetch(
@@ -99,10 +108,24 @@ const Tasks = () => {
     }
   };
 
-  const filteredTasks = tasks.filter(
-    (task) =>
-      task.title && task.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredTasks = tasks.filter((task) => {
+    const matchesSearch =
+      task.title && task.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesAdminFilter =
+      filterMode === "admin" ? task.userid === parseInt(user_id) : true;
+
+    const matchesStatusFilter =
+      filterMode === "pending"
+        ? task.status?.toLowerCase() === "pending"
+        : filterMode === "inprogress"
+        ? task.status?.toLowerCase() === "in progress"
+        : filterMode === "completed"
+        ? task.status?.toLowerCase() === "completed"
+        : true;
+
+    return matchesSearch && matchesAdminFilter && matchesStatusFilter;
+  });
 
   return (
     <div className="tasks-container">
@@ -113,6 +136,41 @@ const Tasks = () => {
         </div>
       </div>
 
+      {/* Filter Section */}
+      <div className="filter-toggle">
+        <button
+          className={filterMode === "all" ? "active-filter" : ""}
+          onClick={() => setFilterMode("all")}
+        >
+          All Tasks
+        </button>
+        <button
+          className={filterMode === "admin" ? "active-filter" : ""}
+          onClick={() => setFilterMode("admin")}
+        >
+          My Tasks (Admin)
+        </button>
+        <button
+          className={filterMode === "pending" ? "active-filter" : ""}
+          onClick={() => setFilterMode("pending")}
+        >
+          Pending
+        </button>
+        <button
+          className={filterMode === "inprogress" ? "active-filter" : ""}
+          onClick={() => setFilterMode("inprogress")}
+        >
+          In Progress
+        </button>
+        <button
+          className={filterMode === "completed" ? "active-filter" : ""}
+          onClick={() => setFilterMode("completed")}
+        >
+          Completed
+        </button>
+      </div>
+
+      {/* Search and Add */}
       <div className="search-bar">
         <input
           type="text"
@@ -127,6 +185,7 @@ const Tasks = () => {
         </button>
       </div>
 
+      {/* Task List Display */}
       <GetTask
         tasks={filteredTasks}
         toggleTaskCompletion={toggleTaskCompletion}
@@ -135,6 +194,7 @@ const Tasks = () => {
         updateTask={updateTask}
       />
 
+      {/* Modal */}
       {showModal && (
         <NewTaskModal
           onClose={() => {
