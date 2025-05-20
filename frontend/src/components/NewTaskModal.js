@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./NewTaskModal.css";
-import Tasks from "../pages/Tasks";
 
 const NewTaskModal = ({
   onClose,
@@ -17,6 +16,7 @@ const NewTaskModal = ({
     status: "Pending",
     dueDate: "",
     assignedBy: "USER",
+    user_id: "",
   });
 
   useEffect(() => {
@@ -24,15 +24,18 @@ const NewTaskModal = ({
     const isAdmin = loggedInUserId === "1";
 
     if (selectedTask) {
-      setTaskData(selectedTask);
-    } else {
+      setTaskData({
+        ...selectedTask,
+        user_id: selectedTask.user_id ?? assignedUser?.id,
+        assignedBy: selectedTask.assignedBy ?? (isAdmin ? "ADMIN" : "USER"),
+      });
+    } else if (assignedUser?.id) {
       setTaskData((prev) => ({
         ...prev,
         assignedBy: isAdmin ? "ADMIN" : "USER",
-        user_id: assignedUser?.id, // ✅ set user_id for new task
+        user_id: assignedUser.id,
       }));
     }
-    console.log("Assigned User ID:", assignedUser?.id);
   }, [selectedTask, assignedUser]);
 
   useEffect(() => {
@@ -50,7 +53,14 @@ const NewTaskModal = ({
 
   const handleSubmit = async () => {
     if (taskData.title.trim()) {
-      console.log("Submitting task data:", taskData);
+      const loggedInUserId = localStorage.getItem("user_id");
+
+      if (!taskData.user_id && assignedUser?.id) {
+        taskData.user_id = assignedUser.id;
+      }
+
+      console.log("Submitting task data:", taskData); // Confirm it includes user_id
+
       try {
         const token = localStorage.getItem("user_token");
         if (!token) {
@@ -58,17 +68,15 @@ const NewTaskModal = ({
           return;
         }
 
-        const response = await fetch(`${API_KEY}/api/tasks/createtasks`, {
+        const response = await fetch(`${API_KEY}/api/tasks/createtaskbyAdmin`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(taskData),
-          credentials: "include", // This helps with CORS for cookies
+          credentials: "include",
         });
-
-        console.log("Response status:", response.status);
 
         if (response.ok) {
           const result = await response.text();
@@ -78,17 +86,15 @@ const NewTaskModal = ({
         } else {
           const errorText = await response.text();
           console.error("Failed to create task:", response.status, errorText);
-          // Optionally show an error to the user
         }
-        // <Tasks />
       } catch (error) {
         console.error("Error creating task:", error);
       }
     } else {
       console.error("Task title cannot be empty");
-      // Optionally show validation error to the user
     }
   };
+  
 
   const handleUpdate = async () => {
     if (taskData.title.trim()) {
@@ -203,6 +209,16 @@ const NewTaskModal = ({
               name="dueDate"
               value={taskData.dueDate}
               onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>User By ID</label>
+            <input
+              type="text"
+              name="user_id"
+              value={taskData.user_id}
+              readOnly
             />
           </div>
         </div>
