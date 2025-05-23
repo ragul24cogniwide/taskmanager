@@ -4,6 +4,7 @@ import NewTaskModal from "../components/NewTaskModal";
 import GetTask from "../components/GetTask";
 import { Plus } from "lucide-react";
 import "./Tasks.css";
+import ViewTasksAdmin from "../components/ViewTasksAdmin";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -128,80 +129,83 @@ const Tasks = () => {
   });
 
   return (
-    <div className="tasks-container">
-      <div className="tasks-header">
-        <div className="tasks-header-text">
-          <h1>Task Manager</h1>
-          <p>Organize and manage your tasks efficiently</p>
+    <>
+      <div className="tasks-container">
+        <div className="tasks-header1">
+          <div className="tasks-header-text">
+            <h1>Task Manager</h1>
+            <p>Organize and manage your tasks efficiently</p>
+          </div>
         </div>
-      </div>
 
-      {/* Search and Add */}
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search tasks..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
+        {/* Search and Add */}
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search tasks..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+          <button onClick={() => setShowModal(true)} className="add-button">
+            <Plus size={18} />
+            Add New Task
+          </button>
+        </div>
+
+        {/* Filter Section */}
+        <div className="filter-toggle">
+          <button
+            className={filterMode === "all" ? "active-filter" : ""}
+            onClick={() => setFilterMode("all")}
+          >
+            All Tasks
+          </button>
+
+          <button
+            className={filterMode === "pending" ? "active-filter" : ""}
+            onClick={() => setFilterMode("pending")}
+          >
+            Pending
+          </button>
+          <button
+            className={filterMode === "inprogress" ? "active-filter" : ""}
+            onClick={() => setFilterMode("inprogress")}
+          >
+            In Progress
+          </button>
+          <button
+            className={filterMode === "completed" ? "active-filter" : ""}
+            onClick={() => setFilterMode("completed")}
+          >
+            Completed
+          </button>
+        </div>
+
+        {/* Task List Display */}
+        <GetTask
+          tasks={filteredTasks}
+          toggleTaskCompletion={toggleTaskCompletion}
+          deleteTask={deleteTask}
+          emptyImage={notasks}
+          updateTask={updateTask}
         />
-        <button onClick={() => setShowModal(true)} className="add-button">
-          <Plus size={18} />
-          Add New Task
-        </button>
+
+        {/* Modal */}
+        {showModal && (
+          <NewTaskModal
+            onClose={() => {
+              setShowModal(false);
+              setSelectedTask(null);
+            }}
+            onCreate={handleCreateTask}
+            selectedTask={selectedTask}
+            onUpdate={handleUpdateTask}
+          />
+        )}
       </div>
-
-      {/* Filter Section */}
-      <div className="filter-toggle">
-        <button
-          className={filterMode === "all" ? "active-filter" : ""}
-          onClick={() => setFilterMode("all")}
-        >
-          All Tasks
-        </button>
-
-        <button
-          className={filterMode === "pending" ? "active-filter" : ""}
-          onClick={() => setFilterMode("pending")}
-        >
-          Pending
-        </button>
-        <button
-          className={filterMode === "inprogress" ? "active-filter" : ""}
-          onClick={() => setFilterMode("inprogress")}
-        >
-          In Progress
-        </button>
-        <button
-          className={filterMode === "completed" ? "active-filter" : ""}
-          onClick={() => setFilterMode("completed")}
-        >
-          Completed
-        </button>
-      </div>
-
-      {/* Task List Display */}
-      <GetTask
-        tasks={filteredTasks}
-        toggleTaskCompletion={toggleTaskCompletion}
-        deleteTask={deleteTask}
-        emptyImage={notasks}
-        updateTask={updateTask}
-      />
-
-      {/* Modal */}
-      {showModal && (
-        <NewTaskModal
-          onClose={() => {
-            setShowModal(false);
-            setSelectedTask(null);
-          }}
-          onCreate={handleCreateTask}
-          selectedTask={selectedTask}
-          onUpdate={handleUpdateTask}
-        />
-      )}
-    </div>
+      <ViewTasksAdmin tasks={tasks} />
+    </>
   );
 };
 

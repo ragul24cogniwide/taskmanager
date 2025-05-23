@@ -84,9 +84,9 @@ const SlideBar = () => {
             </li>
 
             {localStorage.getItem("user_id") != "1" && (
-              <li onClick={() => navigate("/AdminTasks")}>
+              <li onClick={() => navigate("/ViewTasksByAdmin")}>
                 <CheckCheckIcon size={18} />
-                Tasks Ass
+                Tasks
                 <span className="size-span">(Admin)</span>
               </li>
             )}
@@ -95,8 +95,6 @@ const SlideBar = () => {
               <Bell size={18} />
               Notification
             </li>
-
-
 
             {/* <li onClick={() => navigate("/calendar")}>
               <Calendar size={18} /> Calendar
@@ -113,7 +111,9 @@ const SlideBar = () => {
               </li>
             )}
 
-            <li onClick={()=>navigate("/profile")}><User2Icon size={18}/> Profile</li>
+            <li onClick={() => navigate("/profile")}>
+              <User2Icon size={18} /> Profile
+            </li>
 
             <li onClick={() => handlelogout()}>
               <LogOut size={18} /> Logout

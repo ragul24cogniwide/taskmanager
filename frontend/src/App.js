@@ -11,6 +11,8 @@ import CalendarView from "./pages/CalendarView";
 import GetAllUsers from "./components/GetAllUsers";
 import Dashboard from "./pages/Dashboard/Dashoard";
 import Notifications from "./pages/Notifications";
+import Profile from "./pages/Profile";
+import ViewTasksAdmin from "./components/ViewTasksAdmin";
 
 function App() {
   return (
@@ -36,8 +38,17 @@ function App() {
         <Route path="/usersByAdmin" element={<Layout />}>
           <Route index element={<GetAllUsers />} />
         </Route>
+
         <Route path="/notification" element={<Layout />}>
           <Route index element={<Notifications />} />
+        </Route>
+
+        <Route path="/profile" element={<Layout />}>
+          <Route index element={<Profile />} />
+        </Route>
+
+        <Route path="/viewtasksByAdmin" element={<Layout />}>
+          <Route index element={<ViewTasksAdmin />} />
         </Route>
 
         <Route path="*" element={<h1>404 Not Found</h1>} />
