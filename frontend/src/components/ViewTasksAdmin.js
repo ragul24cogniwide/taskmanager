@@ -3,8 +3,8 @@ import "./ViewTasksAdmin.css";
 
 const ViewTasksAdmin = () => {
   const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [filteredTasks, setFilteredTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const API_KEY = process.env.REACT_APP_API_KEY;
@@ -30,12 +30,8 @@ const ViewTasksAdmin = () => {
         });
 
         const data = await response.json();
-        console.log("Fetched tasks:", data); // Debugging line
+        if (!response.ok) throw new Error("Failed to fetch tasks");
 
-        if (!response.ok) {
-          // Only show tasks where task.userid matches the localStorage user_id
-          throw new Error("Failed to fetch tasks");
-        }
         const matchedTasks = data.filter((task) => task.userid == user_id);
         setTasks(matchedTasks);
         setFilteredTasks(matchedTasks);
@@ -49,32 +45,83 @@ const ViewTasksAdmin = () => {
     fetchTasks();
   }, [API_KEY, token, user_id]);
 
-  if (loading) return <div>Loading tasks...</div>;
+  const updateStatus = async (taskId, newStatus) => {
+    const taskToUpdate = tasks.find((task) => task.id === taskId);
+
+    if (!taskToUpdate) return;
+
+    const updatedTask = {
+      title: taskToUpdate.title || "",
+      description: taskToUpdate.description || "",
+      category: taskToUpdate.category || "",
+      dueDate: taskToUpdate.dueDate || "",
+      priority: taskToUpdate.priority || "",
+      status: newStatus,
+    };
+
+    try {
+      const response = await fetch(
+        `${API_KEY}/api/tasks/updatetask/${taskId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedTask),
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        setTasks((prevTasks) =>
+          prevTasks.map((task) =>
+            task.id === taskId ? { ...task, status: newStatus } : task
+          )
+        );
+      }
+    } catch (err) {
+      console.error("Failed to update status:", err);
+    }
+  };
+
+  if (loading) return <div className="center">Loading tasks...</div>;
   if (error) return <div>{error}</div>;
-  if (filteredTasks.length === 0) {
-    return <div>No tasks assigned by admin.</div>;
-  }
+  if (tasks.length === 0)
+    return <div className="center">No tasks assigned by admin.</div>;
 
   return (
-    <div className="tasks-table">
-      <div className="tasks-header">
-        <div>Title</div>
-        <div>Description</div>
-        <div>Status</div>
-        <div>Due Date</div>
-        <div>Completed</div>
-      </div>
-      {filteredTasks.map((task) => (
-        <div key={task.id} className="tasks-row">
-          <div>{task.title}</div>
-          <div>{task.description}</div>
-          <div>{task.status}</div>
-          <div>{task.dueDate}</div>
-          <div>
-            <input type="checkbox" checked={task.completed} readOnly />
-          </div>
+    <div className="main-content">
+      <h2 className="admin-heading">Tasks by Admin</h2>
+      <div className="tasks-table">
+        <div className="tasks-header">
+          <div>Task ID</div>
+          <div>Title</div>
+          <div>Description</div>
+          <div>Category</div>
+          <div>Status</div>
+          <div>Due Date</div>
         </div>
-      ))}
+        {filteredTasks.map((task) => (
+          <div key={task.id} className="tasks-row">
+            <div>{task.id}</div>
+            <div>{task.title}</div>
+            <div>{task.description}</div>
+            <div>{task.category}</div>
+            <div>
+              <select
+                value={task.status}
+                onChange={(e) => updateStatus(task.id, e.target.value)}
+              >
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+            <div>{task.dueDate}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

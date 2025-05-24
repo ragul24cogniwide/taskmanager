@@ -87,7 +87,7 @@ const SlideBar = () => {
               <li onClick={() => navigate("/ViewTasksByAdmin")}>
                 <CheckCheckIcon size={18} />
                 Tasks
-                <span className="size-span">(Admin)</span>
+                <span className="size-span">(ByAdmin)</span>
               </li>
             )}
 

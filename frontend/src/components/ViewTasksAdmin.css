@@ -1,20 +1,48 @@
+.main-content {
+  flex-grow: 1;
+  overflow: auto;
+  padding: 1.5rem;
+  background-color: #fafafa;
+}
+
+.admin-heading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
 .tasks-table {
   display: flex;
   flex-direction: column;
-
-  gap: 10px;
-  margin: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: white;
 }
 
 .tasks-header,
 .tasks-row {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr 0.5fr;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
+  grid-template-columns: 0.8fr 1.5fr 2fr 1fr 1fr 1fr;
+  padding: 12px 16px;
+  align-items: center;
+  border-bottom: 1px solid #eee;
 }
 
 .tasks-header {
-  font-weight: bold;
-  background-color: #f0f0f0;
+  background-color: #f3f4f6;
+  font-weight: 600;
+  color: #333;
+}
+
+.tasks-row select {
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.center {
+  display: flex;
+  text-align: center;
+  justify-content: center;
 }

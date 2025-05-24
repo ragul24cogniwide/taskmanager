@@ -7,7 +7,7 @@ const TaskCard = ({ task }) => {
       <h4>{task.title}</h4>
       <p>
         Priority:{" "}
-        <span className={`priority ${task.priority.toLowerCase()}`}>
+        <span className={`priority ${task.priority}`}>
           {task.priority}
         </span>
       </p>
