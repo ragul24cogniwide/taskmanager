@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./GetTask.css";
 import ViewTasks from "./ViewTasks";
+import { DeleteIcon } from "lucide-react";
 
 const GetTask = ({
   tasks,

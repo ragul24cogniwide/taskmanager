@@ -204,7 +204,7 @@ const Tasks = () => {
           />
         )}
       </div>
-      <ViewTasksAdmin tasks={tasks} />
+      {/* <ViewTasksAdmin tasks={tasks} /> */}
     </>
   );
 };

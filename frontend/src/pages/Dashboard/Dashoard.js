@@ -34,9 +34,21 @@ const Dashboard = () => {
       fetchTasks();
     }, []); 
 
-  const recentTasks = tasks.slice(-5).reverse();
-  const today = new Date().toISOString().split("T")[0];
-  const dueReminders = tasks.filter((task) => task.dueDate === today);
+    const recentTasks = tasks.slice(-5).reverse();
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+
+    const formatDate = (date) => date.toISOString().split("T")[0];
+
+    const dueReminders = tasks.filter((task) => {
+      const taskDueDate = task.dueDate; // make sure it's the correct field name
+      return (
+        taskDueDate === formatDate(today) ||
+        taskDueDate === formatDate(tomorrow)
+      );
+    });
+    
 
   return (
     <div className="dashboard-container">
@@ -52,13 +64,13 @@ const Dashboard = () => {
           <PieChart tasks={tasks} />
         </div>
         <div className="reminders">
-          <h3>Due Today</h3>
+          <h3>Due Today or Tomorrow</h3>
           {dueReminders.length === 0 ? (
-            <p>No tasks due today!</p>
+            <p>No upcoming tasks due today or tomorrow!</p>
           ) : (
             dueReminders.map((task) => (
               <div className="reminder" key={task._id}>
-                ⚠️ {task.title} is due today!
+                ⚠️ {task.title} is due on {task.dueDate}!
               </div>
             ))
           )}

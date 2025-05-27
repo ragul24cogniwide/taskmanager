@@ -93,3 +93,11 @@
 .assign-task-button-details:hover {
   background-color: #86b300;
 }
+
+
+.search-icon{
+  top: 40%;
+  transform: translateX(-110%);
+  color: #888;
+  font-size: 30px;
+}

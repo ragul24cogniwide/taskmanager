@@ -7,7 +7,7 @@ import Tasks from "./pages/Tasks";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
-import CalendarView from "./pages/CalendarView";
+// import CalendarView from "./pages/CalendarView";
 import GetAllUsers from "./components/GetAllUsers";
 import Dashboard from "./pages/Dashboard/Dashoard";
 import Notifications from "./pages/Notifications";
@@ -31,9 +31,9 @@ function App() {
           <Route index element={<Dashboard />} />
         </Route>
 
-        <Route path="/calendar" element={<Layout />}>
+        {/* <Route path="/calendar" element={<Layout />}>
           <Route index element={<CalendarView />} />
-        </Route>
+        </Route> */}
 
         <Route path="/usersByAdmin" element={<Layout />}>
           <Route index element={<GetAllUsers />} />

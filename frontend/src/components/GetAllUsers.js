@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./GetAllUsers.css";
 import NewTaskModal from "./NewTaskModal";
 
+import { Search } from "lucide-react";
+
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 const GetAllUsers = () => {
@@ -70,6 +72,7 @@ const GetAllUsers = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+      <Search className="search-icon" size={20} />
 
       {loading ? (
         <p>Loading...</p>
@@ -97,14 +100,14 @@ const GetAllUsers = () => {
                     >
                       Assign Task
                     </button>
-                    <button
+                    {/* <button
                       className="assign-task-button-details"
                       onClick={() =>
                         console.log(`Viewing details for ${user.username}`)
                       }
                     >
                       View Details
-                    </button>
+                    </button> */}
                   </td>
                 </tr>
               ))}
