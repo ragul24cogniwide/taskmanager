@@ -8,47 +8,49 @@ const Dashboard = () => {
   const token = localStorage.getItem("user_token");
   const API_KEY = process.env.REACT_APP_API_KEY;
 
-    useEffect(() => {
-      const fetchTasks = async () => {
-        try {
-          const user_id = localStorage.getItem("user_id");
-          const response = await fetch(
-            `${API_KEY}/api/tasks/getalltasksbyid/${user_id}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              credentials: "include",
-            }
-          );
-          if (!response.ok) throw new Error("Failed to fetch tasks");
-          const data = await response.json();
-          setTasks(data);
-        } catch (err) {
-          console.error("Error fetching tasks:", err);
-        }
-      };
-  
-      fetchTasks();
-    }, []); 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const user_id = localStorage.getItem("user_id");
+        const response = await fetch(
+          `${API_KEY}/api/tasks/getalltasksbyid/${user_id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            credentials: "include",
+          }
+        );
+        if (!response.ok) throw new Error("Failed to fetch tasks");
+        const data = await response.json();
+        setTasks(data);
+      } catch (err) {
+        console.error("Error fetching tasks:", err);
+      }
+    };
 
-    const recentTasks = tasks.slice(-5).reverse();
-    const today = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(today.getDate() + 1);
+    fetchTasks();
+  }, []);
 
-    const formatDate = (date) => date.toISOString().split("T")[0];
+  const recentTasks = tasks.slice(-5).reverse();
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
 
-    const dueReminders = tasks.filter((task) => {
-      const taskDueDate = task.dueDate; // make sure it's the correct field name
+  const formatDate = (date) => date.toISOString().split("T")[0];
+
+  const dueReminders = tasks
+    .filter((task) => {
+      const taskDueDate = task.dueDate;
       return (
         taskDueDate === formatDate(today) ||
         taskDueDate === formatDate(tomorrow)
       );
-    });
-    
+    })
+    .slice(-5)
+    .reverse(); // Optional: to show the most recent ones first
 
   return (
     <div className="dashboard-container">
