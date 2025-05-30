@@ -54,17 +54,23 @@ const Profile = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(editableUser),
+        body: JSON.stringify({
+          username: editableUser.username,
+          emailid: editableUser.emailid,
+          role: editableUser.role,
+          // password: editableUser.password || user.password, // assuming password isn't shown or edited in UI
+        }),
       });
 
+      const responseText = await res.text();
+
       if (res.ok) {
-        const updated = await res.json();
-        setUser(updated);
-        setEditableUser(updated);
+        // Re-fetch user after update to get fresh copy
+        setUser(editableUser);
         setIsEditing(false);
-        alert("User updated successfully!");
+        alert(responseText || "User updated successfully!");
       } else {
-        alert("Update failed.");
+        alert("Update failed: " + responseText);
       }
     } catch (error) {
       console.error("Error updating user:", error);
@@ -73,6 +79,7 @@ const Profile = () => {
       setUpdating(false);
     }
   };
+  
 
   const handleCancel = () => {
     setEditableUser(user); // Revert changes
@@ -136,7 +143,7 @@ const Profile = () => {
             )}
           </p>
 
-          <p>
+          {/* <p>
             <strong>Status:</strong>
             {isEditing ? (
               <select
@@ -150,7 +157,7 @@ const Profile = () => {
             ) : (
               <span> {editableUser.isActive ? "active" : "inactive"}</span>
             )}
-          </p>
+          </p> */}
 
           {!isEditing ? (
             <button onClick={() => setIsEditing(true)}>Edit</button>

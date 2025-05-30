@@ -77,7 +77,7 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <h1 className="login-title">FocusTrack</h1>
-        <h2>Login</h2>
+        <h2 className="login">Login</h2>
 
         {isError && <div className="error-message">{error}</div>}
 
