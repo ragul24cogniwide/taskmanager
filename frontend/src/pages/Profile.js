@@ -58,6 +58,7 @@ const Profile = () => {
           username: editableUser.username,
           emailid: editableUser.emailid,
           role: editableUser.role,
+          password: editableUser.password, // assuming password is editable
           // password: editableUser.password || user.password, // assuming password isn't shown or edited in UI
         }),
       });
@@ -79,7 +80,6 @@ const Profile = () => {
       setUpdating(false);
     }
   };
-  
 
   const handleCancel = () => {
     setEditableUser(user); // Revert changes
@@ -112,6 +112,20 @@ const Profile = () => {
               />
             ) : (
               <span> {editableUser.username}</span>
+            )}
+          </p>
+
+          <p>
+            <strong>password:</strong>
+            {isEditing ? (
+              <input
+                type="text"
+                name="password"
+                value={editableUser.password}
+                onChange={handleChange}
+              />
+            ) : (
+              <span> {editableUser.password}</span>
             )}
           </p>
 
