@@ -119,10 +119,11 @@ const Profile = () => {
             <strong>password:</strong>
             {isEditing ? (
               <input
-                type="text"
+                type="password"
                 name="password"
                 value={editableUser.password}
                 onChange={handleChange}
+                disabled
               />
             ) : (
               <span> {editableUser.password}</span>

@@ -78,13 +78,15 @@ const Notifications = () => {
       <h2>Overdue Tasks</h2>
       <div className="task-list">
         {finishedTasks.length > 0 ? (
-          finishedTasks.map((task) => (
-            <div className="task-card finished" key={task._id}>
-              <h3>❌ {task.title}</h3>
-              <p>Due Date: {task.dueDate}</p>
-              <p>{task.description}</p>
-            </div>
-          ))
+          finishedTasks
+            .filter((task) => task.status !== "Completed")
+            .map((task) => (
+              <div className="task-card finished" key={task._id}>
+                <h3>❌ {task.title}</h3>
+                <p>Due Date: {task.dueDate}</p>
+                <p>{task.description}</p>
+              </div>
+            ))
         ) : (
           <p>No OverDue tasks.</p>
         )}
