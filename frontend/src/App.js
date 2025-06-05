@@ -4,14 +4,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // Pages & Components
 import Layout from "./components/Layout";
 import Tasks from "./pages/Tasks";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
 
 // import CalendarView from "./pages/CalendarView";
 import GetAllUsers from "./components/GetAllUsers";
 import Dashboard from "./pages/Dashboard/Dashoard";
-import Notifications from "./pages/Notifications";
-import Profile from "./pages/Profile";
+import Notifications from "./pages/Notification/Notifications";
+import Profile from "./pages/Profile/Profile";
 import ViewTasksAdmin from "./components/ViewTasksAdmin";
 
 function App() {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
 
-import background from "../assests/background.jpg";
+import background from "../../assests/background.jpg"; // Adjust the path as necessary
 
 const Register = () => {
   // const API_KEY = process.env.REACT_APP_API_KEY;
