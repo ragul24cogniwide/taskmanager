@@ -81,6 +81,7 @@ const NewTaskModal = ({
         if (response.ok) {
           const result = await response.text();
           console.log("Task created successfully:", result);
+          window.alert("Task created successfully");
           onCreate(result);
           onClose();
         } else {

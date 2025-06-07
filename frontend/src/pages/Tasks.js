@@ -4,7 +4,7 @@ import NewTaskModal from "../components/NewTaskModal";
 import GetTask from "../components/GetTask";
 import { Plus } from "lucide-react";
 import "./Tasks.css";
-import ViewTasksAdmin from "../components/ViewTasksAdmin";
+
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
