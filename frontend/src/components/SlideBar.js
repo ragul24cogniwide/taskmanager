@@ -121,12 +121,12 @@ const SlideBar = () => {
           </ul>
         </div>
       </div>
-      {showModal && (
+      {/* {showModal && (
         <NewTaskModal
           onClose={() => setShowModal(false)}
           onCreate={handleCreateTask}
         />
-      )}
+      )} */}
     </>
   );
 };

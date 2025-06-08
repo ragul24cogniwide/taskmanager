@@ -50,7 +50,7 @@ const Dashboard = () => {
       );
     })
     .slice(-5)
-    .reverse(); // Optional: to show the most recent ones first
+    .reverse(); //  to show the most recent ones first
 
   return (
     <div className="dashboard-container">

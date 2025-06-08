@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
-import background from "../../assests/background.jpg"; // Adjust the path as necessary
+import background from "../../assests/background.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Login = () => {
 
   useEffect(() => {
     const img = new Image();
-    img.src = background; // 👈 fix this line (remove curly braces)
+    img.src = background; //
   }, []);
 
   const handleChange = (e) => {
@@ -46,7 +46,7 @@ const Login = () => {
       });
 
       if (!response.ok) {
-        // Handle 401 or other server errors
+        // Handle 401
         if (response.status === 401) {
           throw new Error("Invalid username or password");
         } else {
@@ -82,7 +82,7 @@ const Login = () => {
         {isError && <div className="error-message">{error}</div>}
 
         {loading ? (
-          <div className="loader"></div> // 👈 Show loader
+          <div className="loader"></div> // loader component
         ) : (
           <>
             <form onSubmit={handleSubmit}>

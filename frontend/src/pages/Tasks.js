@@ -5,7 +5,6 @@ import GetTask from "../components/GetTask";
 import { Plus } from "lucide-react";
 import "./Tasks.css";
 
-
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
@@ -103,6 +102,7 @@ const Tasks = () => {
         console.error("Failed to delete task:", response.statusText);
         return;
       }
+      window.alert("Task deleted successfully");
       setTasks(tasks.filter((task) => task.id !== taskId));
     } catch (error) {
       console.error("Error deleting task:", error);
