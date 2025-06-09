@@ -13,6 +13,8 @@ const Tasks = () => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [filterMode, setFilterMode] = useState("all"); // all, admin
   const [statusFilter, setStatusFilter] = useState("all"); // all, pending, inprogress, completed
+  const [dateFilter, setDateFilter] = useState(""); // Format: YYYY-MM-DD
+  const [priorityFilter, setPriorityFilter] = useState("all"); // low, medium, high
 
   const token = localStorage.getItem("user_token");
   const user_id = localStorage.getItem("user_id");
@@ -125,7 +127,21 @@ const Tasks = () => {
         ? task.status?.toLowerCase() === "completed"
         : true;
 
-    return matchesSearch && matchesAdminFilter && matchesStatusFilter;
+    const matchesDateFilter =
+      dateFilter === "" ? true : task.date === dateFilter;
+
+    const matchesPriorityFilter =
+      priorityFilter === "all"
+        ? true
+        : task.priority?.toLowerCase() === priorityFilter.toLowerCase();
+
+    return (
+      matchesSearch &&
+      matchesAdminFilter &&
+      matchesStatusFilter &&
+      matchesDateFilter &&
+      matchesPriorityFilter
+    );
   });
 
   return (
@@ -180,6 +196,25 @@ const Tasks = () => {
           >
             Completed
           </button>
+
+          <input
+            type="date"
+            value={dateFilter}
+            onChange={(e) => setDateFilter(e.target.value)}
+            className="filter-date"
+          />
+
+          {/* Priority Filter */}
+          <select
+            value={priorityFilter}
+            onChange={(e) => setPriorityFilter(e.target.value)}
+            className="filter-priority"
+          >
+            <option value="all">All Priorities</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
         </div>
 
         {/* Task List Display */}
