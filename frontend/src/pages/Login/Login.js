@@ -61,6 +61,7 @@ const Login = () => {
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
+      
     } catch (error) {
       console.error("Login error:", error.message);
       setError("Login failed. Please check your credentials.");

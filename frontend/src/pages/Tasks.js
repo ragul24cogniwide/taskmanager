@@ -4,6 +4,7 @@ import NewTaskModal from "../components/NewTaskModal";
 import GetTask from "../components/GetTask";
 import { Plus } from "lucide-react";
 import "./Tasks.css";
+import { parse, format } from "date-fns";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -127,6 +128,7 @@ const Tasks = () => {
         ? task.status?.toLowerCase() === "completed"
         : true;
 
+    //Date filter logic is not working properly
     const matchesDateFilter =
       dateFilter === "" ? true : task.date === dateFilter;
 
