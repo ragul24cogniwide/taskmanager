@@ -130,7 +130,7 @@ const Tasks = () => {
 
     //Date filter logic is not working properly
     const matchesDateFilter =
-      dateFilter === "" ? true : task.date === dateFilter;
+      dateFilter === "" ? true : task.dueDate === dateFilter;
 
     const matchesPriorityFilter =
       priorityFilter === "all"
