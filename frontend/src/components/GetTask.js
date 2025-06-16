@@ -9,6 +9,7 @@ const GetTask = ({
   deleteTask,
   emptyImage,
   updateTask,
+  onRefreshTasks,
 }) => {
   const [selectedTask, setSelectedTask] = useState(null);
 

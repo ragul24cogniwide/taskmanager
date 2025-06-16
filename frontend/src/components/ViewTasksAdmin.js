@@ -32,7 +32,12 @@ const ViewTasksAdmin = () => {
         const data = await response.json();
         if (!response.ok) throw new Error("Failed to fetch tasks");
 
-        const matchedTasks = data.filter((task) => task.userid == user_id);
+        const matchedTasks = data.filter(
+          (task) =>
+            task.status == "Pending" ||
+            (task.status == "In Progress" && task.userid == user_id)
+        );
+        // const filteredTasks = data.filter()
         setTasks(matchedTasks);
         setFilteredTasks(matchedTasks);
       } catch (err) {

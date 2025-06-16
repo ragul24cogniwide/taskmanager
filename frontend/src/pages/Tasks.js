@@ -4,7 +4,6 @@ import NewTaskModal from "../components/NewTaskModal";
 import GetTask from "../components/GetTask";
 import { Plus } from "lucide-react";
 import "./Tasks.css";
-import { parse, format } from "date-fns";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -13,7 +12,6 @@ const Tasks = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTask, setSelectedTask] = useState(null);
   const [filterMode, setFilterMode] = useState("all"); // all, admin
-  const [statusFilter, setStatusFilter] = useState("all"); // all, pending, inprogress, completed
   const [dateFilter, setDateFilter] = useState(""); // Format: YYYY-MM-DD
   const [priorityFilter, setPriorityFilter] = useState("all"); // low, medium, high
 
@@ -32,34 +30,36 @@ const Tasks = () => {
   }, []);
 
   // Fetch tasks from API
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch(
-          `${API_KEY}/api/tasks/getalltasksbyid/${user_id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            credentials: "include",
-          }
-        );
-        if (!response.ok) throw new Error("Failed to fetch tasks");
-        const data = await response.json();
-        setTasks(data);
-      } catch (err) {
-        console.error("Error fetching tasks:", err);
-      }
-    };
 
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch(
+        `${API_KEY}/api/tasks/getalltasksbyid/${user_id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        }
+      );
+      if (!response.ok) throw new Error("Failed to fetch tasks");
+      const data = await response.json();
+      setTasks(data);
+    } catch (err) {
+      console.error("Error fetching tasks:", err);
+    }
+  };
+
+  useEffect(() => {
     fetchTasks();
   }, [API_KEY, token, user_id]);
 
   // Create task
-  const handleCreateTask = (newTask) => {
+  const handleCreateTask = async (newTask) => {
     setTasks((prev) => [...prev, newTask]);
+    await fetchTasks(); // Refresh tasks after creation
   };
 
   // Prepare to edit task
@@ -72,10 +72,11 @@ const Tasks = () => {
   };
 
   // Update task after edit
-  const handleUpdateTask = (updatedTask) => {
+  const handleUpdateTask = async(updatedTask) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     );
+    await fetchTasks(); // Refresh task list after update
   };
 
   // Toggle complete/incomplete

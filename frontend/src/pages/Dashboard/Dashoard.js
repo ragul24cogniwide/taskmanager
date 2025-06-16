@@ -54,7 +54,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h2 className="text">Task Manager Dashboard</h2>
+      <h2 className="text">Focus-Track Dashboard</h2>
       <p className="dashboard-caption">
         Stay organized and on top of your tasks with a quick overview of
         priorities, due reminders, and recent activity.

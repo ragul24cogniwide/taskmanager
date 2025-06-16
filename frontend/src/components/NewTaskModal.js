@@ -118,6 +118,7 @@ const NewTaskModal = ({
         if (response.ok) {
           const result = await response.text();
           onUpdate(result);
+          window.alert("Task updated successfully");
           onClose();
         }
       } catch (error) {
