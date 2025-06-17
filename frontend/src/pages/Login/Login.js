@@ -48,7 +48,7 @@ const Login = () => {
       if (!response.ok) {
         // Handle 401
         if (response.status === 401) {
-          throw new Error("Invalid username or password");
+          setError("Invalid username or password or Login approval pending");
         } else {
           throw new Error("Something went wrong. Please try again.");
         }
@@ -57,14 +57,16 @@ const Login = () => {
       const data = await response.json();
       localStorage.setItem("user_token", data.token);
       localStorage.setItem("user_id", data.id);
+      localStorage.setItem("user_role", data.role);
 
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
-      
     } catch (error) {
       console.error("Login error:", error.message);
-      setError("Login failed. Please check your credentials.");
+      setError(
+        "Login failed. Please check your credentials,  or Login approval pending"
+      );
       setIsError(true);
       setLoading(false);
     }

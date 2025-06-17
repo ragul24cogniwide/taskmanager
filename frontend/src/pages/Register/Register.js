@@ -110,6 +110,22 @@ const Register = () => {
               minLength="6"
             />
           </div>
+
+          {/* <div className="form-group">
+            <label htmlFor="role">Select Role</label>
+            <select
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              required
+            >
+              <option value="">-- Select Role --</option>
+              <option value="Admin">Admin</option>
+              <option value="User">User</option>
+            </select>
+          </div> */}
+
           <button type="submit" className="register-button">
             Register
           </button>

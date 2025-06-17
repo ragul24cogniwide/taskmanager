@@ -8,6 +8,7 @@ const RequestAccess = () => {
 
   const API_KEY = process.env.REACT_APP_API_KEY;
   const token = localStorage.getItem("user_token");
+  // const user_id = localStorage.getItem("user_id");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -34,7 +35,6 @@ const RequestAccess = () => {
         } else {
           setError("Invalid data format received.");
         }
-        
       } catch (err) {
         setError("Something went wrong while fetching users.");
       } finally {
@@ -47,13 +47,22 @@ const RequestAccess = () => {
 
   const handleAction = async (userId, action) => {
     try {
-      const response = await fetch(`${API_KEY}/api/users/${action}/${userId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const selectedUser = users.find((u) => u.id === userId);
+      const response = await fetch(
+        `${API_KEY}/api/users/updatestatus/${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            status: action,
+            role: selectedUser.role,
+          }),
+        }
+      );
 
       if (response.ok) {
         setUsers((prev) => prev.filter((user) => user.id !== userId));
@@ -76,6 +85,7 @@ const RequestAccess = () => {
           <div>User ID</div>
           <div>Username</div>
           <div>Email</div>
+          <div>Role</div>
           <div>Action</div>
         </div>
         {users.map((user) => (
@@ -83,16 +93,31 @@ const RequestAccess = () => {
             <div>{user.id}</div>
             <div>{user.username}</div>
             <div>{user.emailid}</div>
+            <div>
+              <select
+                value={user.role}
+                onChange={(e) =>
+                  setUsers((prevUsers) =>
+                    prevUsers.map((u) =>
+                      u.id === user.id ? { ...u, role: e.target.value } : u
+                    )
+                  )
+                }
+              >
+                <option value="USER">USER</option>
+                <option value="ADMIN">ADMIN</option>
+              </select>
+            </div>
             <div className="button-group">
               <button
                 className="approve-btn"
-                onClick={() => handleAction(user.id, "approve")}
+                onClick={() => handleAction(user.id, "Approved")}
               >
                 Approve
               </button>
               <button
                 className="reject-btn"
-                onClick={() => handleAction(user.id, "reject")}
+                onClick={() => handleAction(user.id, "Rejected")}
               >
                 Reject
               </button>
