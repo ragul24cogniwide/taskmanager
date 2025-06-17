@@ -123,7 +123,6 @@ const Profile = () => {
                 name="password"
                 value={editableUser.password}
                 onChange={handleChange}
-                disabled
               />
             ) : (
               <span> {editableUser.password}</span>
@@ -152,6 +151,7 @@ const Profile = () => {
                 name="role"
                 value={editableUser.role}
                 onChange={handleChange}
+                disabled
               />
             ) : (
               <span> {editableUser.role}</span>
