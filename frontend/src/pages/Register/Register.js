@@ -13,6 +13,7 @@ const Register = () => {
     role: "USER",
     password: "",
     confirmpassword: "",
+    status: "Pending",
   });
 
   // Optional: Preload the background image for better UX

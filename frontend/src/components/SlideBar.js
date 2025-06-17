@@ -44,15 +44,15 @@ const SlideBar = () => {
     navigate("/");
   };
 
-  const handleCreateTask = (task) => {
-    const newTask = {
-      id: Date.now(),
-      ...task,
-      completed: false,
-      createdAt: new Date(),
-    };
-    setTasks([...tasks, newTask]);
-  };
+  // const handleCreateTask = (task) => {
+  //   const newTask = {
+  //     id: Date.now(),
+  //     ...task,
+  //     completed: false,
+  //     createdAt: new Date(),
+  //   };
+  //   setTasks([...tasks, newTask]);
+  // };
 
   return (
     <>
@@ -108,6 +108,14 @@ const SlideBar = () => {
                 <User size={18} />
                 Users
                 <span className="size-span">(Admin Acess)</span>
+              </li>
+            )}
+
+            {localStorage.getItem("user_id") === "1" && (
+              <li onClick={() => navigate("/requestAccess")}>
+                <CheckCheckIcon size={18} />
+                Request Access
+                {/* <span className="size-span">(Admin Acess)</span> */}
               </li>
             )}
 

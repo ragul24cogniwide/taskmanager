@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard/Dashoard";
 import Notifications from "./pages/Notification/Notifications";
 import Profile from "./pages/Profile/Profile";
 import ViewTasksAdmin from "./components/ViewTasksAdmin";
+import RequestAccess from "./pages/RequestAccess(Admin)/RequestAccess";
 
 function App() {
   return (
@@ -49,6 +50,10 @@ function App() {
 
         <Route path="/viewtasksByAdmin" element={<Layout />}>
           <Route index element={<ViewTasksAdmin />} />
+        </Route>
+
+        <Route path="/requestAccess" element={<Layout />}>
+          <Route index element={<RequestAccess />} />
         </Route>
 
         <Route path="*" element={<h1>404 Not Found</h1>} />

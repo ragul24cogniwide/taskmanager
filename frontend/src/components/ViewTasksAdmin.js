@@ -32,11 +32,7 @@ const ViewTasksAdmin = () => {
         const data = await response.json();
         if (!response.ok) throw new Error("Failed to fetch tasks");
 
-        const matchedTasks = data.filter(
-          (task) =>
-            task.status == "Pending" ||
-            (task.status == "In Progress" && task.userid == user_id)
-        );
+        const matchedTasks = data.filter((task) => task.userid == user_id);
         // const filteredTasks = data.filter()
         setTasks(matchedTasks);
         setFilteredTasks(matchedTasks);
@@ -79,12 +75,20 @@ const ViewTasksAdmin = () => {
       );
 
       if (response.ok) {
-        setTasks((prevTasks) =>
-          prevTasks.map((task) =>
-            task.id === taskId ? { ...task, status: newStatus } : task
-          )
+        const updatedTasks = tasks.map((task) =>
+          task.id === taskId ? { ...task, status: newStatus } : task
         );
+        setTasks(updatedTasks);
+        setFilteredTasks(updatedTasks); // ← Add this line
       }
+
+      // if (response.ok) {
+      //   setTasks((prevTasks) =>
+      //     prevTasks.map((task) =>
+      //       task.id === taskId ? { ...task, status: newStatus } : task
+      //     )
+      //   );
+      // }
     } catch (err) {
       console.error("Failed to update status:", err);
     }
