@@ -4,7 +4,7 @@
   padding: 2rem;
   /* background-color: #f9f9f9; */
   margin-left: 260px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .community-title {
@@ -35,7 +35,7 @@
 
 .user-card h3 {
   margin-bottom: 0.8rem;
-  color: #1e90ff;
+  color: #3730a3;
 }
 
 .task-list {
@@ -61,4 +61,43 @@
   text-align: center;
   padding: 1rem;
   color: red;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.close-button,
+.view-button {
+  margin-top: 10px;
+  background-color: #3730a3;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-button:hover,
+.view-button:hover {
+  background-color: #0056b3;
 }

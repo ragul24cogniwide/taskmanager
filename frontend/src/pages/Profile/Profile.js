@@ -18,6 +18,11 @@ const Profile = () => {
   const { userInfo } = useUser();
 
   useEffect(() => {
+    console.log("User Role:", userInfo.role);
+    console.log("User ID:", userInfo.id);
+  }, [userInfo]);
+
+  useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await fetch(
