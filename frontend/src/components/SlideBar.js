@@ -6,19 +6,16 @@ import {
   CheckSquare,
   CheckCheckIcon,
   User2Icon,
-  Calendar,
-  BarChart,
+  Bell,
   Plus,
   LogOut,
   User,
-  Bell,
 } from "lucide-react";
-import "./SlideBar.css";
 import { useNavigate } from "react-router-dom";
+import NewTaskModal from "./NewTaskModal";
+import "./SlideBar.css";
 
-import NewTaskModal from "./NewTaskModal"; // Import the modal component
-
-const SlideBar = () => {
+const SlideBar = ({ Role, userid }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -27,8 +24,9 @@ const SlideBar = () => {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth <= 768) setIsOpen(false);
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      if (mobile) setIsOpen(false);
     };
 
     checkMobile();
@@ -38,9 +36,10 @@ const SlideBar = () => {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
-  const handlelogout = () => {
+  const handleLogout = () => {
     localStorage.removeItem("user_token");
     localStorage.removeItem("user_id");
+    localStorage.removeItem("Role");
     navigate("/");
   };
 
@@ -51,7 +50,7 @@ const SlideBar = () => {
       completed: false,
       createdAt: new Date(),
     };
-    setTasks([...tasks, newTask]);
+    setTasks((prev) => [...prev, newTask]);
   };
 
   return (
@@ -70,65 +69,55 @@ const SlideBar = () => {
         )}
 
         <div className="sidebar-content">
-          <h2>Focus-Track</h2>
+          <h2 className="sidebar-title">Focus-Track</h2>
+
           <button onClick={() => setShowModal(true)} className="Add-button">
             <Plus size={18} /> Add Task
           </button>
-          <ul>
+
+          <ul className="sidebar-list">
             <li onClick={() => navigate("/dashboard")}>
               <Home size={18} /> DashBoard
             </li>
 
             <li onClick={() => navigate("/home")}>
-              <CheckSquare size={18} /> Tasks
+              <CheckSquare size={18} /> My Tasks
             </li>
 
-            {localStorage.getItem("user_id") != "1" && (
+            {Role === "USER" && (
               <li onClick={() => navigate("/ViewTasksByAdmin")}>
-                <CheckCheckIcon size={18} />
-                Tasks
-                <span className="size-span">(ByAdmin)</span>
+                <CheckCheckIcon size={18} /> Tasks{" "}
+                <span className="size-span">(By Admin)</span>
               </li>
             )}
 
             <li onClick={() => navigate("/notification")}>
-              <Bell size={18} />
-              Notification
+              <Bell size={18} /> Notification
             </li>
 
-            {/* <li onClick={() => navigate("/calendar")}>
-              <Calendar size={18} /> Calendar
-            </li>
-            <li>
-              <BarChart size={18} /> Reports
-            </li> */}
-
-            {localStorage.getItem("user_id") === "1" && (
-              <li onClick={() => navigate("/usersByAdmin")}>
-                <User size={18} />
-                Users
-                <span className="size-span">(Admin Acess)</span>
-              </li>
-            )}
-
-            {localStorage.getItem("user_id") === "1" && (
-              <li onClick={() => navigate("/requestAccess")}>
-                <CheckCheckIcon size={18} />
-                Request Access
-                {/* <span className="size-span">(Admin Acess)</span> */}
-              </li>
+            {Role === "ADMIN" && (
+              <>
+                <li onClick={() => navigate("/usersByAdmin")}>
+                  <User size={18} /> Users{" "}
+                  <span className="size-span">(Admin Access)</span>
+                </li>
+                <li onClick={() => navigate("/requestAccess")}>
+                  <CheckCheckIcon size={18} /> Request Access
+                </li>
+              </>
             )}
 
             <li onClick={() => navigate("/profile")}>
               <User2Icon size={18} /> Profile
             </li>
 
-            <li onClick={() => handlelogout()}>
+            <li onClick={handleLogout}>
               <LogOut size={18} /> Logout
             </li>
           </ul>
         </div>
       </div>
+
       {showModal && (
         <NewTaskModal
           onClose={() => setShowModal(false)}

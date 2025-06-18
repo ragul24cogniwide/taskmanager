@@ -3,6 +3,7 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
 import background from "../../assests/background.jpg";
+import SlideBar from "../../components/SlideBar";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -56,11 +57,11 @@ const Login = () => {
 
       const data = await response.json();
       localStorage.setItem("user_token", data.token);
-      localStorage.setItem("user_id", data.id);
-      localStorage.setItem("user_role", data.role);
 
       setTimeout(() => {
         navigate("/dashboard");
+        <SlideBar Role={data.role} userid={data.id} />;
+        console.log("Login successful:", data.role, data.id);
       }, 1000);
     } catch (error) {
       console.error("Login error:", error.message);
