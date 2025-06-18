@@ -44,15 +44,15 @@ const SlideBar = () => {
     navigate("/");
   };
 
-  // const handleCreateTask = (task) => {
-  //   const newTask = {
-  //     id: Date.now(),
-  //     ...task,
-  //     completed: false,
-  //     createdAt: new Date(),
-  //   };
-  //   setTasks([...tasks, newTask]);
-  // };
+  const handleCreateTask = (task) => {
+    const newTask = {
+      id: Date.now(),
+      ...task,
+      completed: false,
+      createdAt: new Date(),
+    };
+    setTasks([...tasks, newTask]);
+  };
 
   return (
     <>
@@ -129,12 +129,12 @@ const SlideBar = () => {
           </ul>
         </div>
       </div>
-      {/* {showModal && (
+      {showModal && (
         <NewTaskModal
           onClose={() => setShowModal(false)}
           onCreate={handleCreateTask}
         />
-      )} */}
+      )}
     </>
   );
 };

@@ -10,6 +10,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     username: "",
     emailid: "",
+    designation: "",
     role: "USER",
     password: "",
     confirmpassword: "",
@@ -111,17 +112,30 @@ const Register = () => {
             />
           </div>
 
+          <div className="form-group">
+            <label htmlFor="designation">Designation</label>
+            <input
+              type="text"
+              id="designation"
+              name="designation"
+              value={formData.designation}
+              onChange={handleChange}
+              required
+              minLength="6"
+            />
+          </div>
+
           {/* <div className="form-group">
-            <label htmlFor="role">Select Role</label>
+            <label htmlFor="designation">Select Role</label>
             <select
-              id="role"
-              name="role"
-              value={formData.role}
+              id="designation"
+              name="designation"
+              value={formData.designation}
               onChange={handleChange}
               required
             >
-              <option value="">-- Select Role --</option>
-              <option value="Admin">Admin</option>
+              <option value="">-- Select designation --</option>
+              <option value="Admin"></option>
               <option value="User">User</option>
             </select>
           </div> */}

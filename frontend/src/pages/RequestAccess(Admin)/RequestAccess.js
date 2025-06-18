@@ -85,6 +85,7 @@ const RequestAccess = () => {
           <div>User ID</div>
           <div>Username</div>
           <div>Email</div>
+          <div>Designation</div>
           <div>Role</div>
           <div>Action</div>
         </div>
@@ -93,6 +94,7 @@ const RequestAccess = () => {
             <div>{user.id}</div>
             <div>{user.username}</div>
             <div>{user.emailid}</div>
+            <div>{user.designation}</div>
             <div>
               <select
                 value={user.role}

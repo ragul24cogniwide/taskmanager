@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./GetAllUsers.css";
 import NewTaskModal from "./NewTaskModal";
-
 import { Search } from "lucide-react";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -11,7 +10,7 @@ const GetAllUsers = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null); // ✅ store selected user
+  const [selectedUser, setSelectedUser] = useState(null);
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -32,7 +31,16 @@ const GetAllUsers = () => {
         }
 
         const data = await response.json();
-        setUsers(data);
+
+        // Filter users: exclude Pending and Rejected
+        const filtered = data.filter(
+          (user) =>
+            user.status !== "Pending" &&
+            user.status !== "Rejected" &&
+            user.id != 1
+        );
+
+        setUsers(filtered);
       } catch (error) {
         console.error("Error fetching users:", error);
       } finally {
@@ -46,7 +54,8 @@ const GetAllUsers = () => {
   const filteredUsers = users.filter(
     (user) =>
       user.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email?.toLowerCase().includes(searchTerm.toLowerCase())
+      user.emailid?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.designation?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleCreateTask = (newTask) => {
@@ -58,70 +67,82 @@ const GetAllUsers = () => {
     setShowModal(true);
   };
 
+  // Group users by role
+  const groupedUsers = {
+    Admin: filteredUsers.filter((user) => user.role === "ADMIN"),
+    User: filteredUsers.filter((user) => user.role === "USER"),
+  };
+
   return (
     <div className="main-content">
       <h2 className="text">All Users</h2>
       <p className="users-caption">
-        Below is the list of users with options to assign tasks or view details
-        by Admin.
+        View list of Admins and Users. Assign tasks if you're an Admin.
       </p>
-      <input
-        type="text"
-        placeholder="Search by username or email..."
-        className="search-input"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <Search className="search-icon" size={20} />
+
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search by username or email..."
+          className="search-input"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <Search className="search-icon" size={20} />
+      </div>
 
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="table-wrapper">
-          <table className="user-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.username}</td>
-                  <td>{user.emailid}</td>
-                  <td>
-                    <button
-                      className="assign-task-button"
-                      onClick={() => openTaskModal(user)} // ✅ open modal
-                    >
-                      Assign Task
-                    </button>
-                    {/* <button
-                      className="assign-task-button-details"
-                      onClick={() =>
-                        console.log(`Viewing details for ${user.username}`)
-                      }
-                    >
-                      View Details
-                    </button> */}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        ["Admin", "User"].map((roleType) => (
+          <div key={roleType}>
+            <h3 className="role-heading">{roleType}s</h3>
+            <div className="table-wrapper">
+              <table className="user-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Designation</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {groupedUsers[roleType]?.length > 0 ? (
+                    groupedUsers[roleType].map((user) => (
+                      <tr key={user.id}>
+                        <td>{user.id}</td>
+                        <td>{user.username}</td>
+                        <td>{user.emailid}</td>
+                        <td>{user.designation}</td>
+                        <td>
+                          <button
+                            className="assign-task-button"
+                            onClick={() => openTaskModal(user)}
+                          >
+                            Assign Task
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="4">No {roleType.toLowerCase()}s found.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))
       )}
 
-      {/* Show modal if triggered */}
       {showModal && selectedUser && (
         <NewTaskModal
           onCreate={handleCreateTask}
           onClose={() => setShowModal(false)}
-          assignedUser={selectedUser} // includes user.id
+          assignedUser={selectedUser}
         />
       )}
     </div>

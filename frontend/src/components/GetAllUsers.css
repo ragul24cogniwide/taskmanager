@@ -12,7 +12,7 @@
     margin-top: 50px;
   }
 
-  .text{
+  .text {
     font-size: 20px;
     text-align: center;
   }
@@ -33,27 +33,46 @@
   text-align: center;
 }
 
+.search-container {
+  position: relative;
+  max-width: 50%;
+  margin: 0 auto;
+}
 
 .search-input {
   padding: 10px;
   width: 100%;
-  max-width: 50%;
-  margin: 15px 0;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 16px;
-  box-sizing: border-box;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.role-heading {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
 }
 
 .table-wrapper {
   overflow-x: auto;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .user-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 600px; /* Ensures horizontal scroll on small screens */
+  min-width: 600px;
 }
 
 .user-table th,
@@ -64,40 +83,20 @@
 }
 
 .user-table th {
-  background-color: #f2f2f2;
+  background-color: #f9f9f9;
+  font-weight: bold;
 }
 
 .assign-task-button {
-  padding: 10px 7px;
+  padding: 8px 12px;
   background-color: #5a43f5;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
 }
+
 .assign-task-button:hover {
-  background-color: #0056b3;
-}
-
-.assign-task-button-details {
-  padding: 10px 7px;
-  background-color: green;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-left: 10px;
-}
-.assign-task-button-details:hover {
-  background-color: #86b300;
-}
-
-
-.search-icon{
-  top: 40%;
-  transform: translateX(-110%);
-  color: #888;
-  font-size: 30px;
+  background-color: #3e2fc3;
 }

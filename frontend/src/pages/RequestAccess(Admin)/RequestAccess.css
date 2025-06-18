@@ -28,7 +28,7 @@
 .approval-header,
 .approval-row {
   display: grid;
-  grid-template-columns: 1fr 2fr 3fr 2fr 2fr;
+  grid-template-columns: 1fr 2fr 4fr 2fr 2fr 2fr;
   align-items: center;
   padding: 12px;
   border: 1px solid #e0e0e0;
