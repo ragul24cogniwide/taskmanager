@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../components/UserContext"; // Import UserContext
 
 import background from "../../assests/background.jpg";
-import SlideBar from "../../components/SlideBar";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,6 +30,7 @@ const Login = () => {
   };
 
   const API_KEY = process.env.REACT_APP_API_KEY;
+  const { setUserInfo } = useUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,8 +61,8 @@ const Login = () => {
 
       setTimeout(() => {
         navigate("/dashboard");
-        <SlideBar Role={data.role} userid={data.id} />;
-        console.log("Login successful:", data.role, data.id);
+        setUserInfo({ role: data.role, id: data.id });
+        navigate("/dashboard");
       }, 1000);
     } catch (error) {
       console.error("Login error:", error.message);

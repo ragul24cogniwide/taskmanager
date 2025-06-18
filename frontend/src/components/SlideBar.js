@@ -14,13 +14,17 @@ import {
 import { useNavigate } from "react-router-dom";
 import NewTaskModal from "./NewTaskModal";
 import "./SlideBar.css";
+import { useUser } from "./UserContext"; // Import UserContext
 
-const SlideBar = ({ Role, userid }) => {
+const SlideBar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [tasks, setTasks] = useState([]);
   const navigate = useNavigate();
+
+  const { userInfo } = useUser();
+  console.log(userInfo.role, userInfo.id);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -38,8 +42,6 @@ const SlideBar = ({ Role, userid }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("user_token");
-    localStorage.removeItem("user_id");
-    localStorage.removeItem("Role");
     navigate("/");
   };
 
@@ -84,7 +86,7 @@ const SlideBar = ({ Role, userid }) => {
               <CheckSquare size={18} /> My Tasks
             </li>
 
-            {Role === "USER" && (
+            {userInfo.role === "USER" && (
               <li onClick={() => navigate("/ViewTasksByAdmin")}>
                 <CheckCheckIcon size={18} /> Tasks{" "}
                 <span className="size-span">(By Admin)</span>
@@ -95,7 +97,7 @@ const SlideBar = ({ Role, userid }) => {
               <Bell size={18} /> Notification
             </li>
 
-            {Role === "ADMIN" && (
+            {userInfo.role === "ADMIN" && (
               <>
                 <li onClick={() => navigate("/usersByAdmin")}>
                   <User size={18} /> Users{" "}

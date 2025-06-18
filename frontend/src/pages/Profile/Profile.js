@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { User } from "lucide-react";
 import "./Profile.css";
+import { useUser } from "../../components/UserContext"; // Import UserContext
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -10,20 +11,23 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [updating, setUpdating] = useState(false);
 
-  const id = localStorage.getItem("user_id");
+  const { userInfo } = useUser();
   const token = localStorage.getItem("user_token");
   const API_KEY = process.env.REACT_APP_API_KEY;
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`${API_KEY}/api/users/getUserbyid/${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          `${API_KEY}/api/users/getUserbyid/${userInfo.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const data = await res.json();
         setUser(data);
         setEditableUser(data);
@@ -35,7 +39,7 @@ const Profile = () => {
     };
 
     fetchUser();
-  }, [id]);
+  }, [userInfo.id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +52,7 @@ const Profile = () => {
   const handleUpdate = async () => {
     setUpdating(true);
     try {
-      const res = await fetch(`${API_KEY}/api/users/update/${id}`, {
+      const res = await fetch(`${API_KEY}/api/users/update/${userInfo.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
