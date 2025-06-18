@@ -3,6 +3,7 @@ import notasks from "../assests/no-tasks-removebg-preview.png";
 import NewTaskModal from "../components/NewTaskModal";
 import GetTask from "../components/GetTask";
 import { Plus } from "lucide-react";
+import { useUser } from "../components/UserContext";
 import "./Tasks.css";
 
 const Tasks = () => {
@@ -16,8 +17,8 @@ const Tasks = () => {
   const [priorityFilter, setPriorityFilter] = useState("all"); // low, medium, high
 
   const token = localStorage.getItem("user_token");
-  const user_id = localStorage.getItem("user_id");
   const API_KEY = process.env.REACT_APP_API_KEY;
+  const { userInfo } = useUser();
 
   // Track screen size for responsiveness
   useEffect(() => {
@@ -34,7 +35,7 @@ const Tasks = () => {
   const fetchTasks = async () => {
     try {
       const response = await fetch(
-        `${API_KEY}/api/tasks/getalltasksbyid/${user_id}`,
+        `${API_KEY}/api/tasks/getalltasksbyid/${userInfo.id}`,
         {
           method: "GET",
           headers: {
@@ -54,7 +55,7 @@ const Tasks = () => {
 
   useEffect(() => {
     fetchTasks();
-  }, [API_KEY, token, user_id]);
+  }, [API_KEY, token, userInfo.id]);
 
   // Create task
   const handleCreateTask = async (newTask) => {
@@ -72,7 +73,7 @@ const Tasks = () => {
   };
 
   // Update task after edit
-  const handleUpdateTask = async(updatedTask) => {
+  const handleUpdateTask = async (updatedTask) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     );
@@ -118,7 +119,7 @@ const Tasks = () => {
       task.title && task.title.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesAdminFilter =
-      filterMode === "admin" ? task.userid === parseInt(user_id) : true;
+      filterMode === "admin" ? task.userid === parseInt(userInfo.id) : true;
 
     const matchesStatusFilter =
       filterMode === "pending"

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { User } from "lucide-react";
 import "./Profile.css";
-import { useUser } from "../../components/UserContext"; // Import UserContext
+import { useUser } from "../../components/UserContext";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -11,9 +11,11 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [updating, setUpdating] = useState(false);
 
-  const { userInfo } = useUser();
+  const id = localStorage.getItem("user_id");
   const token = localStorage.getItem("user_token");
   const API_KEY = process.env.REACT_APP_API_KEY;
+
+  const { userInfo } = useUser();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,7 +41,7 @@ const Profile = () => {
     };
 
     fetchUser();
-  }, [userInfo.id]);
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

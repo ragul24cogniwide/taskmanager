@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import PieChart from "./PieChart";
 import TaskCard from "./TaskCard";
 import "./Dashboard.css";
+import { useUser } from "../../components/UserContext"; // Import UserContext
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
   const token = localStorage.getItem("user_token");
   const API_KEY = process.env.REACT_APP_API_KEY;
-
+  const { userInfo } = useUser();
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const user_id = localStorage.getItem("user_id");
         const response = await fetch(
-          `${API_KEY}/api/tasks/getalltasksbyid/${user_id}`,
+          `${API_KEY}/api/tasks/getalltasksbyid/${userInfo.id}`,
           {
             method: "GET",
             headers: {

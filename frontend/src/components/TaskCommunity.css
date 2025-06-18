@@ -1,0 +1,64 @@
+/* src/pages/TaskCommunity/TaskCommunity.css */
+
+.task-community-page {
+  padding: 2rem;
+  /* background-color: #f9f9f9; */
+  margin-left: 260px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.community-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.community-description {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #666;
+}
+
+.users-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.user-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-card h3 {
+  margin-bottom: 0.8rem;
+  color: #1e90ff;
+}
+
+.task-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.task-item {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background: #eef6ff;
+  border-radius: 5px;
+  color: #333;
+}
+
+.no-task {
+  font-style: italic;
+  color: #999;
+}
+
+.community-error,
+.community-loading {
+  text-align: center;
+  padding: 1rem;
+  color: red;
+}

@@ -15,6 +15,7 @@ import Profile from "./pages/Profile/Profile";
 import ViewTasksAdmin from "./components/ViewTasksAdmin";
 import RequestAccess from "./pages/RequestAccess(Admin)/RequestAccess";
 import { UserProvider } from "./components/UserContext"; // Import UserContext
+import TaskCommunity from "./components/TaskCommunity";
 
 function App() {
   return (
@@ -57,6 +58,10 @@ function App() {
 
             <Route path="/requestAccess" element={<Layout />}>
               <Route index element={<RequestAccess />} />
+            </Route>
+
+            <Route path="/taskcommunity" element={<Layout />}>
+              <Route index element={<TaskCommunity />} />
             </Route>
 
             <Route path="*" element={<h1>404 Not Found</h1>} />

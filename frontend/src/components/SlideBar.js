@@ -23,7 +23,8 @@ const SlideBar = () => {
   const [tasks, setTasks] = useState([]);
   const navigate = useNavigate();
 
-  const { userInfo } = useUser();
+  const { userInfo } = useUser(); // Access userInfo from UserContext
+
   console.log(userInfo.role, userInfo.id);
 
   useEffect(() => {
@@ -37,7 +38,11 @@ const SlideBar = () => {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+  
 
+
+  // Then conditionally return
+  
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   const handleLogout = () => {
@@ -86,7 +91,7 @@ const SlideBar = () => {
               <CheckSquare size={18} /> My Tasks
             </li>
 
-            {userInfo.role === "USER" && (
+            {userInfo?.role === "USER" && (
               <li onClick={() => navigate("/ViewTasksByAdmin")}>
                 <CheckCheckIcon size={18} /> Tasks{" "}
                 <span className="size-span">(By Admin)</span>
@@ -97,7 +102,7 @@ const SlideBar = () => {
               <Bell size={18} /> Notification
             </li>
 
-            {userInfo.role === "ADMIN" && (
+            {userInfo?.role === "ADMIN" && (
               <>
                 <li onClick={() => navigate("/usersByAdmin")}>
                   <User size={18} /> Users{" "}
@@ -108,6 +113,10 @@ const SlideBar = () => {
                 </li>
               </>
             )}
+
+            <li onClick={() => navigate("/taskcommunity")}>
+              <CheckCheckIcon size={18} /> Task Community
+            </li>
 
             <li onClick={() => navigate("/profile")}>
               <User2Icon size={18} /> Profile
