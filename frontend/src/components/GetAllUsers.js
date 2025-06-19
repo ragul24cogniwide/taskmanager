@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./GetAllUsers.css";
 import NewTaskModal from "./NewTaskModal";
 import { Search } from "lucide-react";
+import { useUser } from "../components/UserContext";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -12,6 +13,9 @@ const GetAllUsers = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [tasks, setTasks] = useState([]);
+
+  const { userInfo } = useUser();
+  console.log("User Role:", userInfo.role);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -94,48 +98,95 @@ const GetAllUsers = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        ["Admin", "User"].map((roleType) => (
-          <div key={roleType}>
-            <h3 className="role-heading">{roleType}s</h3>
-            <div className="table-wrapper">
-              <table className="user-table">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Designation</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {groupedUsers[roleType]?.length > 0 ? (
-                    groupedUsers[roleType].map((user) => (
-                      <tr key={user.id}>
-                        <td>{user.id}</td>
-                        <td>{user.username}</td>
-                        <td>{user.emailid}</td>
-                        <td>{user.designation}</td>
-                        <td>
-                          <button
-                            className="assign-task-button"
-                            onClick={() => openTaskModal(user)}
-                          >
-                            Assign Task
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
+        <>
+          {userInfo.role === "ADMIN" && (
+            <>
+              <h3 className="role-heading">Admins</h3>
+              <div className="table-wrapper">
+                <table className="user-table">
+                  <thead>
                     <tr>
-                      <td colSpan="4">No {roleType.toLowerCase()}s found.</td>
+                      <th>ID</th>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Designation</th>
+                      <th>Actions</th>
                     </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {groupedUsers.Admin.length > 0 ? (
+                      groupedUsers.Admin.map((user) => (
+                        <tr key={user.id}>
+                          <td>{user.id}</td>
+                          <td>{user.username}</td>
+                          <td>{user.emailid}</td>
+                          <td>{user.designation}</td>
+                          <td>
+                            <button
+                              className="assign-task-button"
+                              onClick={() => openTaskModal(user)}
+                            >
+                              Assign Task
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5">No admins found.</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+
+          {/* Always show Users table for both roles */}
+          <h3 className="role-heading">Users</h3>
+          <div className="table-wrapper">
+            <table className="user-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Designation</th>
+                  {/* {userInfo.role === "ADMIN" && <th>Actions</th>} */}
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {groupedUsers.User.length > 0 ? (
+                  groupedUsers.User.map((user) => (
+                    <tr key={user.id}>
+                      <td>{user.id}</td>
+                      <td>{user.username}</td>
+                      <td>{user.emailid}</td>
+                      <td>{user.designation}</td>
+                      {/* {userInfo.role === "ADMIN" && ( */}
+                      <td>
+                        <button
+                          className="assign-task-button"
+                          onClick={() => openTaskModal(user)}
+                        >
+                          Assign Task
+                        </button>
+                      </td>
+                      {/* )} */}
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={userInfo.role === "ADMIN" ? "5" : "4"}>
+                      No users found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
-        ))
+        </>
       )}
 
       {showModal && selectedUser && (

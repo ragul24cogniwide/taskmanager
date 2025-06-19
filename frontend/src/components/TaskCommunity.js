@@ -44,19 +44,6 @@ const TaskCommunity = () => {
           return { ...user, tasks: userTasks };
         });
 
-        // const usersWithTheirTasks = users.map((user) => {
-        //   const userTasks = tasks.filter((task) => {
-        //     const isAssignedToUser =
-        //       task.user_id === user.id || task.users?.id === user.id;
-        //     const isNotPending = task.status != "Pending";
-        //     return isAssignedToUser && isNotPending;
-        //   });
-
-        //   return {
-        //     ...user,
-        //     tasks: userTasks,
-        //   };
-        // });
 
         setUsersWithTasks(usersWithTheirTasks);
       } catch (err) {
@@ -109,7 +96,15 @@ const TaskCommunity = () => {
               {selectedUser.tasks && selectedUser.tasks.length > 0 ? (
                 selectedUser.tasks.map((task) => (
                   <li key={task.id} className="task-item">
-                    <strong>{task.title}</strong>: {task.description}
+                    <p>
+                      <strong>Title:</strong> {task.title}
+                    </p>
+                    <p>
+                      <strong>Description:</strong> {task.description}
+                    </p>
+                    <p>
+                      <strong>Assigned By:</strong> {task.assignedBy}
+                    </p>
                   </li>
                 ))
               ) : (

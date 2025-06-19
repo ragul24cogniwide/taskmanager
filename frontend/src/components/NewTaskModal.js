@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./NewTaskModal.css";
+import { useUser } from "../components/UserContext";
 
 const NewTaskModal = ({
   onClose,
@@ -18,10 +19,10 @@ const NewTaskModal = ({
     assignedBy: "USER",
     userid: "",
   });
+  const { userInfo } = useUser();
 
   useEffect(() => {
-    const loggedInUserId = localStorage.getItem("user_id");
-    const isAdmin = loggedInUserId === "1";
+    const isAdmin = userInfo.role === "ADMIN";
 
     if (selectedTask) {
       setTaskData({
@@ -53,8 +54,6 @@ const NewTaskModal = ({
 
   const handleSubmit = async () => {
     if (taskData.title.trim()) {
-      const loggedInUserId = localStorage.getItem("user_id");
-
       if (!taskData.userid && assignedUser?.id) {
         taskData.userid = assignedUser.id;
       }

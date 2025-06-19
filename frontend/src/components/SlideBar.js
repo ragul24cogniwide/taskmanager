@@ -38,11 +38,9 @@ const SlideBar = () => {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-  
-
 
   // Then conditionally return
-  
+
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   const handleLogout = () => {
@@ -102,12 +100,13 @@ const SlideBar = () => {
               <Bell size={18} /> Notification
             </li>
 
+            <li onClick={() => navigate("/usersByAdmin")}>
+              <User size={18} /> Users{" "}
+              <span className="size-span">(Admin Access)</span>
+            </li>
+
             {userInfo?.role === "ADMIN" && (
               <>
-                <li onClick={() => navigate("/usersByAdmin")}>
-                  <User size={18} /> Users{" "}
-                  <span className="size-span">(Admin Access)</span>
-                </li>
                 <li onClick={() => navigate("/requestAccess")}>
                   <CheckCheckIcon size={18} /> Request Access
                 </li>

@@ -69,6 +69,7 @@ const Profile = () => {
           username: editableUser.username,
           emailid: editableUser.emailid,
           role: editableUser.role,
+          designation: editableUser.designation,
           password: editableUser.password, // assuming password is editable
           // password: editableUser.password || user.password, // assuming password isn't shown or edited in UI
         }),
@@ -166,6 +167,21 @@ const Profile = () => {
               />
             ) : (
               <span> {editableUser.role}</span>
+            )}
+          </p>
+
+          <p>
+            <strong>Designation:</strong>
+            {isEditing ? (
+              <input
+                type="text"
+                name="designation"
+                value={editableUser.designation}
+                onChange={handleChange}
+                disabled
+              />
+            ) : (
+              <span> {editableUser.designation}</span>
             )}
           </p>
 

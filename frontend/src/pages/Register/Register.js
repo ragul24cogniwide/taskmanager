@@ -7,6 +7,7 @@ import background from "../../assests/background.jpg"; // Adjust the path as nec
 const Register = () => {
   // const API_KEY = process.env.REACT_APP_API_KEY;
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     emailid: "",
@@ -48,6 +49,10 @@ const Register = () => {
         throw new Error("Network response was not ok " + response.statusText);
       }
 
+      if (response.status === 409) {
+        setError("Username already exists. Please login.");
+      }
+
       // console.log("Registration submitted:", formData);
       navigate("/");
     } catch (error) {
@@ -64,6 +69,7 @@ const Register = () => {
       <div className="register-card">
         <h1 className="register-title">FocusTrack</h1>
         <h2>Create Account</h2>
+        {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
