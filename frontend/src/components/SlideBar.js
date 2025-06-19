@@ -10,6 +10,7 @@ import {
   Plus,
   LogOut,
   User,
+  Users,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import NewTaskModal from "./NewTaskModal";
@@ -102,7 +103,7 @@ const SlideBar = () => {
 
             <li onClick={() => navigate("/usersByAdmin")}>
               <User size={18} /> Users{" "}
-              <span className="size-span">(Admin Access)</span>
+              <span className="size-span">(Access)</span>
             </li>
 
             {userInfo?.role === "ADMIN" && (
@@ -114,7 +115,7 @@ const SlideBar = () => {
             )}
 
             <li onClick={() => navigate("/taskcommunity")}>
-              <CheckCheckIcon size={18} /> Task Community
+              <Users size={18} /> Task Community
             </li>
 
             <li onClick={() => navigate("/profile")}>
