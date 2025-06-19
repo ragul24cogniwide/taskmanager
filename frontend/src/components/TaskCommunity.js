@@ -8,7 +8,6 @@ const TaskCommunity = () => {
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  
 
   const API_KEY = process.env.REACT_APP_API_KEY;
   const token = localStorage.getItem("user_token");
@@ -44,6 +43,20 @@ const TaskCommunity = () => {
           );
           return { ...user, tasks: userTasks };
         });
+
+        // const usersWithTheirTasks = users.map((user) => {
+        //   const userTasks = tasks.filter((task) => {
+        //     const isAssignedToUser =
+        //       task.user_id === user.id || task.users?.id === user.id;
+        //     const isNotPending = task.status != "Pending";
+        //     return isAssignedToUser && isNotPending;
+        //   });
+
+        //   return {
+        //     ...user,
+        //     tasks: userTasks,
+        //   };
+        // });
 
         setUsersWithTasks(usersWithTheirTasks);
       } catch (err) {
@@ -104,7 +117,7 @@ const TaskCommunity = () => {
               )}
             </ul>
             <button className="close-button" onClick={closeModal}>
-              <X size={18} />
+              <X size={12} />
             </button>
           </div>
         </div>

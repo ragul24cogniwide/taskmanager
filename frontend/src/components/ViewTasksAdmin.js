@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ViewTasksAdmin.css";
+import { useUser } from "../components/UserContext";
 
 const ViewTasksAdmin = () => {
   const [tasks, setTasks] = useState([]);
@@ -9,11 +10,12 @@ const ViewTasksAdmin = () => {
 
   const API_KEY = process.env.REACT_APP_API_KEY;
   const token = localStorage.getItem("user_token");
-  const user_id = localStorage.getItem("user_id");
+
+  const { userInfo } = useUser();
 
   useEffect(() => {
     const fetchTasks = async () => {
-      if (!user_id || !token) {
+      if (!token) {
         setError("Missing user credentials.");
         setLoading(false);
         return;
@@ -32,7 +34,7 @@ const ViewTasksAdmin = () => {
         const data = await response.json();
         if (!response.ok) throw new Error("Failed to fetch tasks");
 
-        const matchedTasks = data.filter((task) => task.userid == user_id);
+        const matchedTasks = data.filter((task) => task.userid == userInfo.id);
         // const filteredTasks = data.filter()
         setTasks(matchedTasks);
         setFilteredTasks(matchedTasks);
@@ -44,7 +46,7 @@ const ViewTasksAdmin = () => {
     };
 
     fetchTasks();
-  }, [API_KEY, token, user_id]);
+  }, [API_KEY, token, userInfo.id]);
 
   const updateStatus = async (taskId, newStatus) => {
     const taskToUpdate = tasks.find((task) => task.id === taskId);
