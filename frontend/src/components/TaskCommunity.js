@@ -111,6 +111,7 @@ const TaskCommunity = () => {
                     <p>
                       <strong>Description:</strong> {task.description}
                     </p>
+                    <p><strong>Status</strong>{task.status}</p>
                     <p>
                       <strong>Assigned By:</strong> {task.assignedBy}
                     </p>
@@ -118,8 +119,8 @@ const TaskCommunity = () => {
                       <strong>Assignment Type:</strong>{" "}
                       {task.user_id === null
                         ? "Self-assigned"
-                        : task.user_id === 0
-                        ? "Assigned (user_id=0)"
+                        : task.userid === 0
+                        ? "Assigned (userid=0)"
                         : "Assigned by userid"}
                     </p>
                   </li>

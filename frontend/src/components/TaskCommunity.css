@@ -41,14 +41,17 @@
 .task-list {
   list-style: none;
   padding-left: 0;
+  display: flex;
+  flex-direction: column; /* Ensure vertical stacking */
+  gap: 1rem; /* Optional: space between items */
 }
 
 .task-item {
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
   background: #eef6ff;
   border-radius: 5px;
+  padding: 1rem;
   color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* optional for nicer look */
 }
 
 .no-task {
@@ -65,10 +68,14 @@
 
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.6);
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1000;
 }
 
@@ -79,8 +86,9 @@
   max-width: 500px;
   width: 90%;
   position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
 }
-
 
 .close-button,
 .view-button {

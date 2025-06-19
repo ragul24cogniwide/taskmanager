@@ -103,7 +103,7 @@ const ViewTasksAdmin = () => {
 
   return (
     <div className="main-content">
-      <h2 className="admin-heading">Tasks by Admin</h2>
+      <h2 className="admin-heading">Tasks by Admin / Users</h2>
       <div className="tasks-table">
         <div className="tasks-header">
           <div>Task ID</div>
