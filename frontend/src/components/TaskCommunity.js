@@ -38,19 +38,37 @@ const TaskCommunity = () => {
         const tasks = await tasksResponse.json();
         console.log("Fetched Tasks:", tasks);
 
+        // const usersWithTheirTasks = users.map((user) => {
+        //   const userTasks = tasks.filter((task) => {
+        //     // Case 1: task.user_id is null (self-assigned task)
+        //     if (task.user_id === null) {
+        //       return true; // Include self-assigned tasks (you may want to restrict this to the task creator if needed)
+        //     }
+        //     // Case 2: task.user_id is 0, compare task.user_id with user.id
+        //     if (task.user_id === 0) {
+        //       return task.user_id === user.id;
+        //     }
+        //     // Case 3: Otherwise, compare task.userid with user.id
+        //     return task.userid === user.id;
+        //   });
+        //   return { ...user, tasks: userTasks };
+        // });
+
         const usersWithTheirTasks = users.map((user) => {
-          const userTasks = tasks.filter((task) => {
-            // Case 1: task.user_id is null (self-assigned task)
-            if (task.user_id === null) {
-              return true; // Include self-assigned tasks (you may want to restrict this to the task creator if needed)
-            }
-            // Case 2: task.user_id is 0, compare task.user_id with user.id
-            if (task.user_id === 0) {
-              return task.user_id === user.id;
-            }
-            // Case 3: Otherwise, compare task.userid with user.id
-            return task.userid === user.id;
-          });
+          const userTasks = tasks
+            .filter((task) => task.userid === user.id)
+            .map((task) => {
+              const assignedByUser = users.find(
+                (user) => user.id === task.user_id
+              );
+              return {
+                ...task,
+                assignedByName: assignedByUser
+                  ? assignedByUser.username
+                  : "Unknown",
+              };
+            });
+
           return { ...user, tasks: userTasks };
         });
 
@@ -117,7 +135,10 @@ const TaskCommunity = () => {
                     <p>
                       <strong>Assigned By:</strong> {task.assignedBy}
                     </p>
-                    <p><strong>Username:{}</strong></p>
+                    <p>
+                      <strong>Assigned By:</strong> {task.assignedByName}
+                    </p>
+
                     {/* <p>
                       <strong>Assignment Type:</strong>{" "}
                       {task.user_id === null
