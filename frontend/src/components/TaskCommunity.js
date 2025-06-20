@@ -98,31 +98,34 @@ const TaskCommunity = () => {
       </div>
 
       {showModal && selectedUser && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-overlay1" onClick={closeModal}>
+          <div className="modal-content1" onClick={(e) => e.stopPropagation()}>
             <h3>{selectedUser.username}'s Tasks</h3>
-            <ul className="task-list">
+            <ul className="task-list1">
               {selectedUser.tasks && selectedUser.tasks.length > 0 ? (
                 selectedUser.tasks.map((task) => (
-                  <li key={task.id} className="task-item">
+                  <li key={task.id} className="task-item1">
                     <p>
                       <strong>Title:</strong> {task.title}
                     </p>
                     <p>
                       <strong>Description:</strong> {task.description}
                     </p>
-                    <p><strong>Status</strong>{task.status}</p>
+                    <p>
+                      <strong>Status:</strong> {task.status}
+                    </p>
                     <p>
                       <strong>Assigned By:</strong> {task.assignedBy}
                     </p>
-                    <p>
+                    <p><strong>Username:{}</strong></p>
+                    {/* <p>
                       <strong>Assignment Type:</strong>{" "}
                       {task.user_id === null
                         ? "Self-assigned"
                         : task.userid === 0
                         ? "Assigned (userid=0)"
                         : "Assigned by userid"}
-                    </p>
+                    </p> */}
                   </li>
                 ))
               ) : (

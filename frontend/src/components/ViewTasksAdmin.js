@@ -112,6 +112,7 @@ const ViewTasksAdmin = () => {
           <div>Category</div>
           <div>Status</div>
           <div>Due Date</div>
+          <div>Assigned By</div>
         </div>
         {filteredTasks.map((task) => (
           <div key={task.id} className="tasks-row">
@@ -130,6 +131,7 @@ const ViewTasksAdmin = () => {
               </select>
             </div>
             <div>{task.dueDate}</div>
+            <div>{task.assignedBy}</div>
           </div>
         ))}
       </div>
