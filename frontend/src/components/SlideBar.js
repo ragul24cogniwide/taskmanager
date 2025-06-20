@@ -92,8 +92,7 @@ const SlideBar = () => {
 
             {userInfo?.role === "USER" && (
               <li onClick={() => navigate("/ViewTasksByAdmin")}>
-                <CheckCheckIcon size={18} /> Tasks{" "}
-                <span className="size-span">(By Admin)</span>
+                <CheckCheckIcon size={18} /> External Tasks
               </li>
             )}
 
