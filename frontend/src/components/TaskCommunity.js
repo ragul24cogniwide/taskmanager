@@ -36,49 +36,7 @@ const TaskCommunity = () => {
 
         if (!tasksResponse.ok) throw new Error("Failed to fetch tasks");
         const tasks = await tasksResponse.json();
-        console.log("Fetched Tasks:", tasks);
-
-        // const usersWithTheirTasks = users.map((user) => {
-        //   const userTasks = tasks.filter((task) => {
-        //     // Case 1: task.user_id is null (self-assigned task)
-        //     if (task.user_id === null) {
-        //       return true; // Include self-assigned tasks (you may want to restrict this to the task creator if needed)
-        //     }
-        //     // Case 2: task.user_id is 0, compare task.user_id with user.id
-        //     if (task.user_id === 0) {
-        //       return task.user_id === user.id;
-        //     }
-        //     // Case 3: Otherwise, compare task.userid with user.id
-        //     return task.userid === user.id;
-        //   });
-        //   return { ...user, tasks: userTasks };
-        // });
-
-        // const usersWithTheirTasks = users.map((user) => {
-        //   const userTasks = tasks.filter((task) => {
-        //     // Case 1: Self-assigned task
-        //     // if (task.userid === null) {
-        //     //   return true;
-        //     // }
-
-        //     // Case 2: task.user_id is 0, check against user.id
-        //     if (task.userid === 0) {
-        //       return task.user_id === user.id;
-        //     }
-
-        //     // Case 3: task.user_id has some value, match with user.id
-        //     return task.userid === user.id;
-        //   });
-
-        //   // Optionally attach the username from user object to each task
-        //   const tasksWithUsername = userTasks.map((task) => ({
-        //     ...task,
-        //     assignedByName: user.username,
-        //   }));
-
-        //   return { ...user, tasks: tasksWithUsername };
-        // });
-
+        
         const usersWithTheirTasks = users.map((user) => {
           const userTasks = tasks
             .filter((task) => {
@@ -167,7 +125,7 @@ const TaskCommunity = () => {
                       <strong>Assigned By:</strong> {task.assignedBy}
                     </p>
                     <p>
-                      <strong>Assigned By:</strong> {task.assignedByName}
+                      <strong>CREATED BY:</strong> {task.assignedByName}
                     </p>
 
                     {/* <p>
