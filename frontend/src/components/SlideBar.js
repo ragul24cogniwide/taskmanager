@@ -90,12 +90,12 @@ const SlideBar = () => {
               <CheckSquare size={18} /> My Tasks
             </li>
 
-            {userInfo?.role === "USER" ||
-              (userInfo?.role === "ADMIN" && (
-                <li onClick={() => navigate("/ViewTasksByAdmin")}>
-                  <CheckCheckIcon size={18} /> External Tasks
-                </li>
-              ))}
+            {/* {userInfo?.role === "USER" ||
+              (userInfo?.role === "ADMIN" && ( */}
+            <li onClick={() => navigate("/ViewTasksByAdmin")}>
+              <CheckCheckIcon size={18} /> External Tasks
+            </li>
+            {/* // ))} */}
 
             <li onClick={() => navigate("/notification")}>
               <Bell size={18} /> Notification
